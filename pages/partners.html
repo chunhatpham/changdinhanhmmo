@@ -1,0 +1,355 @@
+<style>
+    /* BỐ CỤC CHUNG PHONG CÁCH KÍNH MỜ */
+    .partner-wrapper {
+        animation: fadeIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding-bottom: 60px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    /* HERO BANNER */
+    .partner-hero {
+        text-align: center;
+        padding: 50px 20px;
+        background: linear-gradient(135deg, rgba(10, 132, 255, 0.1) 0%, rgba(52, 199, 89, 0.05) 100%);
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+    .partner-hero::after {
+        content: 'VERIFIED';
+        position: absolute;
+        top: -10px; right: -10px;
+        font-size: 80px; font-weight: 900;
+        color: rgba(255,255,255,0.02);
+        transform: rotate(-15deg);
+        pointer-events: none;
+    }
+    .partner-hero h1 {
+        color: #fff;
+        font-size: 28px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+    .partner-hero p {
+        color: #8e8e93;
+        font-size: 15px;
+        line-height: 1.6;
+        max-width: 650px;
+        margin: 0 auto;
+    }
+
+    /* TIÊU ĐỀ NHÓM ĐỐI TÁC */
+    .section-title {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 800;
+        margin: 40px 0 20px 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .section-title::before {
+        content: '';
+        width: 4px; height: 20px;
+        background: var(--accent-color, #0A84FF);
+        border-radius: 4px;
+    }
+
+    /* GRID ĐỐI TÁC */
+    .partner-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .partner-card {
+        background: rgba(28, 28, 30, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 25px 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
+    }
+    .partner-card:hover {
+        transform: translateY(-8px);
+        background: rgba(44, 44, 46, 0.8);
+        border-color: var(--hover-color, #0A84FF);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 15px var(--glow-color, rgba(10,132,255,0.1));
+    }
+
+    /* KHUNG LOGO ẢNH */
+    .p-logo {
+        width: 65px;
+        height: 65px;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 16px;
+        overflow: hidden;
+        background: transparent;
+    }
+    .p-logo img {
+        width: 100%; 
+        height: 100%;
+        object-fit: cover; /* Giúp ảnh lấp đầy khung viền bo góc */
+        border-radius: 16px;
+    }
+    
+    .p-name {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        margin-bottom: 5px;
+    }
+    .p-tag {
+        color: #8e8e93;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* CAM KẾT CHẤT LƯỢNG */
+    .trust-section {
+        margin-top: 60px;
+        background: rgba(52, 199, 89, 0.05);
+        border: 1px solid rgba(52, 199, 89, 0.1);
+        border-radius: 24px;
+        padding: 30px;
+    }
+    .trust-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+    .trust-item { display: flex; gap: 15px; }
+    .trust-icon {
+        width: 45px; height: 45px;
+        background: rgba(52, 199, 89, 0.15);
+        color: #34C759;
+        border-radius: 12px;
+        display: flex; justify-content: center; align-items: center;
+        flex-shrink: 0;
+    }
+    .trust-content h4 { color: #fff; font-size: 15px; font-weight: 800; margin-bottom: 5px; }
+    .trust-content p { color: #aeaeb2; font-size: 13px; line-height: 1.5; }
+
+    /* KHU VỰC BUTTON ĐIỀU HƯỚNG */
+    .action-buttons {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    .action-buttons p {
+        color: #8e8e93;
+        font-size: 13px;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+    .btn-action {
+        width: 100%;
+        max-width: 300px;
+        padding: 14px 20px;
+        border-radius: 14px;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: 0.3s;
+        border: none;
+    }
+    .btn-policy {
+        background: #0A84FF;
+        color: #fff;
+        box-shadow: 0 5px 15px rgba(10, 132, 255, 0.3);
+    }
+    .btn-policy:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(10, 132, 255, 0.5); }
+    
+    .btn-service {
+        background: linear-gradient(135deg, #FFD700, #F5AF19);
+        color: #000;
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+    }
+    .btn-service:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5); }
+    .btn-action svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .partner-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .partner-hero h1 { font-size: 22px; }
+    }
+</style>
+
+<div class="partner-wrapper">
+    
+    <!-- HERO -->
+    <section class="partner-hero">
+        <h1>Hệ Sinh Thái Đối Tác</h1>
+        <p>
+            <strong>CHANGDINHANHMMO.COM</strong> tự hào hợp tác cùng các định chế tài chính và tập đoàn công nghệ hàng đầu thế giới để mang lại những dịch vụ Auto MXH an toàn, bảo mật và chất lượng nhất cho người dùng.
+        </p>
+    </section>
+
+    <!-- NHÓM 1: ĐỐI TÁC CÔNG NGHỆ CHẾN LƯỢC -->
+    <div class="section-title" style="--accent-color: #0A84FF;">Đối tác công nghệ chiến lược</div>
+    <div class="partner-grid">
+        
+        <!-- Meta / FB -->
+        <div class="partner-card" style="--hover-color: #1877F2; --glow-color: rgba(24,119,242,0.2);">
+            <div class="p-logo">
+                <img src="https://i.postimg.cc/tC2NgHyV/IMG-1517.png" alt="Meta Facebook">
+            </div>
+            <div class="p-name">Meta Platforms</div>
+            <div class="p-tag">Dịch vụ Facebook</div>
+        </div>
+
+        <!-- Google -->
+        <div class="partner-card" style="--hover-color: #EA4335; --glow-color: rgba(234,67,53,0.2);">
+            <div class="p-logo">
+                <img src="https://i.postimg.cc/ZKVxqhZN/IMG-1519.jpg" alt="Google Cloud">
+            </div>
+            <div class="p-name">Google Cloud</div>
+            <div class="p-tag">Hạ tầng hệ thống</div>
+        </div>
+
+        <!-- TikTok -->
+        <div class="partner-card" style="--hover-color: #000; --glow-color: rgba(255,255,255,0.1);">
+            <div class="p-logo">
+                <img src="https://i.postimg.cc/pXqJdtxF/IMG-1518.png" alt="TikTok Ltd">
+            </div>
+            <div class="p-name">TikTok Ltd.</div>
+            <div class="p-tag">Dịch vụ Video</div>
+        </div>
+
+        <!-- Telegram -->
+        <div class="partner-card" style="--hover-color: #26A5E4; --glow-color: rgba(38,165,228,0.2);">
+            <div class="p-logo">
+                <img src="https://i.postimg.cc/m28yrGRC/IMG-1520.png" alt="Telegram">
+            </div>
+            <div class="p-name">Telegram FZ-LLC</div>
+            <div class="p-tag">Hệ thống thông báo</div>
+        </div>
+
+    </div>
+
+    <!-- NHÓM 2: HỆ THỐNG NGÂN HÀNG LIÊN KẾT -->
+    <div class="section-title" style="--accent-color: #34C759;">Hệ thống ngân hàng liên kết</div>
+    <div class="partner-grid">
+        
+        <!-- Vietcombank -->
+        <div class="partner-card" style="--hover-color: #007d32; --glow-color: rgba(0,125,50,0.2);">
+            <div class="p-logo">
+                <img src="https://i.postimg.cc/8zcBJnPs/IMG-1521.png" alt="Vietcombank">
+            </div>
+            <div class="p-name">Vietcombank</div>
+            <div class="p-tag">Nạp tự động 24/7</div>
+        </div>
+
+        <!-- MB Bank -->
+        <div class="partner-card" style="--hover-color: #1a1e95; --glow-color: rgba(26,30,149,0.2);">
+            <div class="p-logo">
+                <img src="https://i.postimg.cc/pLrYh1Xm/IMG-1522.png" alt="MB Bank">
+            </div>
+            <div class="p-name">MB Bank</div>
+            <div class="p-tag">Giao dịch 0đ phí</div>
+        </div>
+
+        <!-- Techcombank -->
+        <div class="partner-card" style="--hover-color: #e31837; --glow-color: rgba(227,24,55,0.2);">
+            <div class="p-logo">
+                <img src="https://i.postimg.cc/VkvBrHLd/IMG-1523.png" alt="Techcombank">
+            </div>
+            <div class="p-name">Techcombank</div>
+            <div class="p-tag">Nạp tiền siêu tốc</div>
+        </div>
+
+        <!-- MoMo -->
+        <div class="partner-card" style="--hover-color: #ae2070; --glow-color: rgba(174,32,112,0.2);">
+            <div class="p-logo">
+                <img src="https://i.postimg.cc/mgkNz62c/IMG-1524.webp" alt="Ví MoMo">
+            </div>
+            <div class="p-name">Ví MoMo</div>
+            <div class="p-tag">Ví điện tử số 1</div>
+        </div>
+
+    </div>
+
+    <!-- CAM KẾT CHẤT LƯỢNG DỊCH VỤ -->
+    <div class="trust-section">
+        <div class="trust-grid">
+            <div class="trust-item">
+                <div class="trust-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+                <div class="trust-content">
+                    <h4>Giao dịch an toàn</h4>
+                    <p>Mọi giao dịch nạp tiền đều được thực hiện qua các cổng thanh toán uy tín, mã hóa bảo mật 256-bit.</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></div>
+                <div class="trust-content">
+                    <h4>Xử lý tức thì</h4>
+                    <p>Hệ thống Auto tự động kết nối API với đối tác, xử lý đơn hàng chỉ từ 1-5 phút sau khi thanh toán.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KHU VỰC NÚT BẤM ĐIỀU HƯỚNG -->
+    <div class="action-buttons">
+        <p>Người dùng sử dụng dịch vụ thông qua các đối tác liên kết của chúng tôi sẽ được hưởng đầy đủ các chính sách bảo hành và ưu đãi VIP từ hệ thống.</p>
+        
+        <!-- Nút mở trang Chính Sách Dịch Vụ -->
+        <button class="btn-action btn-policy" onclick="window.navigateTo('pages/policy_service.html')">
+            Xem Chính Sách Dịch Vụ
+        </button>
+
+        <!-- Nút mở thanh Menu Dịch vụ -->
+        <button class="btn-action btn-service" onclick="openServicesMenu()">
+            Khám Phá Dịch Vụ Web
+            <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+        </button>
+    </div>
+
+</div>
+
+<script>
+    // Hàm xử lý khi bấm nút "Khám Phá Dịch Vụ Web"
+    function openServicesMenu() {
+        // Mở sidebar (Hữu ích khi khách đang dùng giao diện điện thoại)
+        if(window.innerWidth <= 900) {
+            document.getElementById('sidebar').classList.add('active');
+            document.getElementById('sidebarOverlay').classList.add('active');
+        }
+
+        // Tìm phần tử "Dịch Vụ" trên thanh menu trái
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            const link = item.querySelector('.menu-link');
+            if (link && link.textContent.includes('Dịch Vụ')) {
+                // Tự động mở (xổ xuống) danh sách dịch vụ nếu nó đang đóng
+                if (!item.classList.contains('open')) {
+                    item.classList.add('open');
+                }
+                
+                // Cuộn menu trái tới vị trí của phần "Dịch vụ"
+                item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    }
+</script>

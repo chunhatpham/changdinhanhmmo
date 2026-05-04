@@ -1,0 +1,330 @@
+<style>
+    /* BỐ CỤC CHUNG PHONG CÁCH IOS */
+    .policy-wrapper {
+        animation: fadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding-bottom: 50px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    /* HEADER CHÍNH SÁCH */
+    .policy-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 30px 20px;
+        background: linear-gradient(135deg, rgba(10, 132, 255, 0.1), rgba(0, 0, 0, 0));
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .policy-header h1 {
+        color: #fff;
+        font-size: 24px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+    .policy-date {
+        color: #0A84FF;
+        font-size: 13px;
+        font-weight: 600;
+        font-style: italic;
+    }
+
+    /* CHƯƠNG (SECTION) */
+    .policy-section {
+        margin-bottom: 25px;
+    }
+    .section-name {
+        color: #8e8e93;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-left: 15px;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+    }
+
+    /* DANH SÁCH ĐIỀU KHOẢN DẠNG CARD ACCORDION */
+    .policy-list {
+        background: rgba(28, 28, 30, 0.6);
+        backdrop-filter: blur(20px);
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        overflow: hidden;
+    }
+
+    .policy-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: 0.3s;
+    }
+    .policy-item:last-child { border-bottom: none; }
+
+    /* TIÊU ĐỀ ĐIỀU (HEADER) */
+    .item-header {
+        padding: 18px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .item-header:hover { background: rgba(255, 255, 255, 0.03); }
+    
+    .item-title-box { display: flex; align-items: center; gap: 12px; }
+    .item-num {
+        width: 28px; height: 28px;
+        background: rgba(10, 132, 255, 0.15);
+        color: #0A84FF;
+        border-radius: 8px;
+        display: flex; justify-content: center; align-items: center;
+        font-size: 12px; font-weight: 800;
+    }
+    .item-title {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 700;
+    }
+    .item-chevron {
+        color: #48484a;
+        font-size: 12px;
+        transition: 0.3s;
+    }
+
+    /* NỘI DUNG CHI TIẾT (CONTENT) */
+    .item-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(0, 0, 0, 0.2);
+    }
+    .content-inner {
+        padding: 20px;
+        color: #aeaeb2;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+    .content-inner strong { color: #fff; }
+    .content-inner p { margin-bottom: 10px; }
+    .content-inner ul { padding-left: 20px; margin-bottom: 10px; }
+    .content-inner li { margin-bottom: 5px; }
+
+    /* TRẠNG THÁI ACTIVE */
+    .policy-item.active { background: rgba(10, 132, 255, 0.03); }
+    .policy-item.active .item-content { max-height: 1500px; }
+    .policy-item.active .item-chevron { transform: rotate(180deg); color: #0A84FF; }
+    .policy-item.active .item-num { background: #0A84FF; color: #fff; }
+
+    /* FOOTER XÁC NHẬN */
+    .policy-footer {
+        margin-top: 40px;
+        padding: 30px 20px;
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .policy-footer p { color: #636366; font-size: 13px; margin-bottom: 20px; }
+    .footer-brand { color: #0A84FF; font-weight: 900; font-size: 18px; letter-spacing: 1px; }
+
+    /* Responsive cho điện thoại */
+    @media (max-width: 600px) {
+        .item-title { font-size: 14px; }
+        .content-inner { font-size: 13.5px; }
+    }
+</style>
+
+<div class="policy-wrapper">
+    
+    <header class="policy-header">
+        <h1>Chính Sách & Điều Khoản</h1>
+        <div class="policy-date">Phiên bản có hiệu lực từ ngày 06 tháng 05 năm 2026</div>
+    </header>
+
+    <div class="policy-section">
+        <div class="section-name">A. Điều khoản sử dụng dịch vụ</div>
+        <div class="policy-list">
+            
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">01</div><div class="item-title">Phạm vi áp dụng</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>1.1. Văn bản này áp dụng cho mọi cá nhân, tổ chức (sau đây gọi chung là <strong>“Người dùng”</strong>) truy cập, đăng ký, sử dụng Nền tảng <strong>CHANGDINHANHMMO.COM</strong> và các ứng dụng, dịch vụ liên quan (sau đây gọi là “Nền tảng”).</p>
+                        <p>1.2. Việc Người dùng truy cập hoặc sử dụng bất kỳ tính năng nào của Nền tảng đồng nghĩa với việc Người dùng đã đọc, hiểu, chấp nhận và cam kết tuân thủ toàn bộ nội dung văn bản này.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">02</div><div class="item-title">Định nghĩa thuật ngữ</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <ul>
+                            <li><strong>“Tài khoản”:</strong> Tài khoản Người dùng tạo trên Nền tảng để sử dụng Dịch vụ.</li>
+                            <li><strong>“Dịch vụ”:</strong> Toàn bộ các chức năng do Nền tảng cung cấp (Nhắn tin, nạp rút, buff MXH, mua bán game...).</li>
+                            <li><strong>“Giao dịch trung gian (Escrow)”:</strong> Dịch vụ giữ tiền tạm thời để đảm bảo an toàn mua bán giữa các thành viên.</li>
+                            <li><strong>“KYC”:</strong> Quy trình xác minh danh tính khách hàng theo quy định pháp luật.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">03</div><div class="item-title">Điều kiện sử dụng & Bảo mật</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Người dùng phải từ <strong>đủ 18 tuổi</strong>, có năng lực hành vi dân sự đầy đủ. Mọi thông tin cung cấp phải chính xác. Người dùng chịu trách nhiệm bảo mật mật khẩu và mọi hoạt động phát sinh từ tài khoản của mình.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">05</div><div class="item-title">Chính sách chống rửa tiền (AML)</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p><strong>CHANGDINHANHMMO.COM</strong> tuân thủ nghiêm ngặt Luật Phòng, chống rửa tiền số 14/2022/QH15. Hệ thống sẽ giám sát và báo cáo các giao dịch đáng ngờ vượt ngưỡng 300 triệu đồng hoặc có dấu hiệu cấu trúc chia nhỏ giao dịch.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <div class="section-name">B. Giao dịch & Thanh toán</div>
+        <div class="policy-list">
+            
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">07</div><div class="item-title">Giao dịch trung gian (Escrow)</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Tiền của Bên Mua sẽ được hệ thống giữ tạm thời. Sau khi Bên Mua xác nhận nhận hàng hoặc hết 03 ngày làm việc mà không có khiếu nại, hệ thống mới giải phóng tiền cho Bên Bán.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">09</div><div class="item-title">Xử lý thẻ cào sai mệnh giá</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Trường hợp Người dùng cung cấp thẻ cào <strong>sai mệnh giá</strong> (khai báo cao hơn thực tế), hệ thống sẽ áp dụng mức <strong>trừ 50% giá trị thực tế</strong> của thẻ để bù đắp rủi ro và chi phí vận hành.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">11</div><div class="item-title">Nạp tiền sai nội dung chuyển khoản</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Nếu nạp tiền sai nội dung dẫn đến việc hệ thống không tự động nhận diện được đơn nạp, <strong>CHANGDINHANHMMO.COM</strong> áp dụng mức <strong>phí xử lý 50%</strong> giá trị nạp để chi trả cho việc kiểm soát và đối soát thủ công.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">12</div><div class="item-title">Thời gian xử lý rút tiền</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <ul>
+                            <li><strong>Từ đổi thẻ cào:</strong> Xử lý trong vòng vài phút đến vài tiếng (giờ làm việc 08:00 - 17:00).</li>
+                            <li><strong>Từ bán vật phẩm/MMO:</strong> Xử lý sau 03 ngày làm việc để đảm bảo thời gian kiểm tra tranh chấp.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <div class="section-name">C. Bảo mật & Xử lý dữ liệu</div>
+        <div class="policy-list">
+            
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">19</div><div class="item-title">Chính sách bảo mật thông tin</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Tuân thủ Nghị định 13/2023/NĐ-CP. Dữ liệu của bạn được mã hóa SSL/TLS. Chúng tôi cam kết không bán hay cho thuê thông tin cá nhân cho bên thứ ba vì mục đích quảng cáo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">32</div><div class="item-title">Kiểm duyệt nội dung và cấm vi phạm</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Nghiêm cấm đăng tải nội dung chống phá nhà nước, đồi trụy, lừa đảo hoặc vi phạm bản quyền. Tài khoản vi phạm sẽ bị khóa vĩnh viễn và báo cáo cơ quan chức năng.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <div class="section-name">D. Giải quyết tranh chấp</div>
+        <div class="policy-list">
+            
+            <div class="policy-item" onclick="togglePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">49</div><div class="item-title">Cơ chế xử lý khiếu nại</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Mọi khiếu nại gửi về email hỗ trợ chính thức. Thời hạn giải quyết tối đa 15 ngày làm việc. Nếu thương lượng không thành, tranh chấp sẽ được đưa ra Tòa án có thẩm quyền tại TP.HCM.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="policy-footer">
+        <p>Bằng việc sử dụng Nền tảng, Người dùng xác nhận đã đọc, hiểu và đồng ý hoàn toàn với toàn bộ nội dung văn bản này.</p>
+        <div class="footer-brand">CHANGDINHANHMMO.COM</div>
+    </footer>
+
+</div>
+
+<script>
+    // HÀM ĐIỀU KHIỂN ĐÓNG MỞ ACCORDION
+    function togglePolicy(element) {
+        // Đóng các mục khác nếu muốn (Optional)
+        /* document.querySelectorAll('.policy-item').forEach(item => {
+            if(item !== element) item.classList.remove('active');
+        });
+        */
+
+        // Bật/tắt mục hiện tại
+        element.classList.toggle('active');
+    }
+</script>

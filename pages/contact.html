@@ -1,0 +1,261 @@
+<style>
+    /* BỐ CỤC CHUNG PHONG CÁCH KÍNH MỜ */
+    .contact-wrapper {
+        animation: fadeIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding-bottom: 60px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* HERO BANNER - LIÊN HỆ */
+    .contact-hero {
+        text-align: center;
+        padding: 50px 20px;
+        background: linear-gradient(135deg, rgba(10, 132, 255, 0.1) 0%, rgba(175, 82, 222, 0.05) 100%);
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .contact-hero::after {
+        content: 'SUPPORT';
+        position: absolute;
+        top: -15px; right: -10px;
+        font-size: 80px; font-weight: 900;
+        color: rgba(255,255,255,0.02);
+        transform: rotate(-10deg);
+        pointer-events: none;
+    }
+    .contact-hero h1 {
+        color: #fff;
+        font-size: 28px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        background: linear-gradient(to right, #fff, #0A84FF);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .contact-hero p {
+        color: #8e8e93;
+        font-size: 15px;
+        line-height: 1.6;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* LƯỚI DANH SÁCH LIÊN HỆ */
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    /* THẺ LIÊN HỆ (CARD) */
+    .contact-card {
+        background: rgba(28, 28, 30, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .contact-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at 50% 0%, var(--brand-color), transparent 70%);
+        opacity: 0;
+        transition: 0.4s;
+        pointer-events: none;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-8px);
+        background: rgba(40, 40, 45, 0.8);
+        border-color: var(--brand-color);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.05);
+    }
+    .contact-card:hover::before { opacity: 0.15; }
+
+    /* ICON */
+    .c-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.05);
+        color: var(--brand-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 2;
+        transition: 0.3s;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    .contact-card:hover .c-icon {
+        background: var(--brand-color);
+        color: #fff;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        border-color: var(--brand-color);
+    }
+    .c-icon svg { width: 35px; height: 35px; fill: currentColor; }
+    .c-icon .txt-icon { font-weight: 900; font-size: 24px; letter-spacing: 1px;}
+
+    /* TEXT */
+    .c-name {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 800;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 2;
+    }
+    .c-desc {
+        color: #8e8e93;
+        font-size: 13px;
+        line-height: 1.5;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* GHI CHÚ BÊN DƯỚI */
+    .contact-note {
+        margin-top: 50px;
+        padding: 25px;
+        background: rgba(52, 199, 89, 0.05);
+        border: 1px solid rgba(52, 199, 89, 0.2);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .contact-note svg { width: 30px; height: 30px; fill: #34C759; flex-shrink: 0; }
+    .contact-note p { color: #aeaeb2; font-size: 14px; line-height: 1.6; }
+    .contact-note strong { color: #fff; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .contact-grid { grid-template-columns: 1fr; }
+        .contact-hero h1 { font-size: 24px; }
+    }
+</style>
+
+<div class="contact-wrapper">
+    
+    <!-- HERO -->
+    <section class="contact-hero">
+        <h1>Trung Tâm Hỗ Trợ Khách Hàng</h1>
+        <p>
+            Đội ngũ CSKH của <strong>CHANGDINHANHMMO</strong> luôn sẵn sàng lắng nghe và giải quyết mọi vấn đề của bạn. Thời gian hỗ trợ nhanh chóng từ 08:00 đến 22:00 hàng ngày.
+        </p>
+    </section>
+
+    <!-- DANH SÁCH LIÊN HỆ -->
+    <div class="contact-grid">
+        
+        <!-- ZALO -->
+        <div class="contact-card" style="--brand-color: #0068FF;" onclick="handleContactClick('https://zalo.me/84394539007', 'blank')">
+            <div class="c-icon"><span class="txt-icon">Zalo</span></div>
+            <div class="c-name">Liên hệ qua Zalo</div>
+            <div class="c-desc">Hỗ trợ nhanh chóng, tư vấn trực tiếp 1-1 qua ứng dụng Zalo.</div>
+        </div>
+
+        <!-- TELEGRAM -->
+        <div class="contact-card" style="--brand-color: #26A5E4;" onclick="handleContactClick('https://t.me/ktvpm1', 'blank')">
+            <div class="c-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.891 8.221l-1.97 9.28c-.145.658-.537.818-1.084.482l-3-2.21-1.446 1.394c-.16.16-.294.294-.602.294l.215-3.05 5.549-5.013c.242-.214-.054-.333-.376-.118L6.822 13.62l-2.955-.923c-.642-.201-.654-.642.134-.949l11.55-4.45c.534-.194 1.002.164.84.923z"/></svg>
+            </div>
+            <div class="c-name">Liên hệ Telegram</div>
+            <div class="c-desc">Kênh hỗ trợ bảo mật, gửi nhận file tốc độ cao qua Telegram.</div>
+        </div>
+
+        <!-- MESSENGER -->
+        <div class="contact-card" style="--brand-color: #00B2FF;" onclick="handleContactClick('https://m.me/anhchang21.27', 'blank')">
+            <div class="c-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.34 5.48 3.44 7.21V22l3.18-1.75c1.05.3 2.18.47 3.38.47 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.18 12.93l-3.03-3.23-5.91 3.23 6.47-6.85 3.09 3.22 5.85-3.22-6.47 6.85z"/></svg>
+            </div>
+            <div class="c-name">Liên hệ Messenger</div>
+            <div class="c-desc">Chat trực tiếp qua Fanpage Facebook của hệ thống.</div>
+        </div>
+
+        <!-- ĐIỆN THOẠI -->
+        <div class="contact-card" style="--brand-color: #34C759;" onclick="handleContactClick('tel:0394539007', 'self')">
+            <div class="c-icon">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <div class="c-name">Gọi Điện Trực Tiếp</div>
+            <div class="c-desc">Dành cho các trường hợp cần xử lý khẩn cấp (Hotline).</div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="contact-card" style="--brand-color: #EA4335;" onclick="handleContactClick('mailto:changdinhanh@gmail.com?subject=Hợp tác công việc&body=Chào bạn Chang,%0ATôi liên hệ để...', 'self')">
+            <div class="c-icon">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <div class="c-name">Gửi Email Hỗ Trợ</div>
+            <div class="c-desc">Liên hệ hợp tác công việc hoặc khiếu nại dịch vụ qua Email.</div>
+        </div>
+
+    </div>
+
+    <!-- GHI CHÚ CHĂM SÓC KHÁCH HÀNG -->
+    <div class="contact-note">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        <p><strong>Lưu ý an toàn:</strong> Tuyệt đối không cung cấp mã OTP, Mật khẩu tài khoản hệ thống cho bất kỳ ai, kể cả nhân viên hỗ trợ của chúng tôi. Hệ thống chỉ yêu cầu Mã Đơn Hàng hoặc Tên Tài Khoản để kiểm tra.</p>
+    </div>
+
+</div>
+
+<script>
+    // Hàm xử lý khi click vào nút liên hệ
+    function handleContactClick(url, target) {
+        
+        // Kiểm tra xem hàm showCustomModal ở trang index.html có tồn tại không
+        if (typeof window.showCustomModal === 'function') {
+            
+            // Gọi hộp thoại xác nhận xịn xò của hệ thống
+            window.showCustomModal(
+                "XÁC NHẬN LIÊN HỆ", 
+                "Bạn có muốn chuyển hướng để liên hệ cho chúng tôi không?", 
+                "confirm", 
+                function() {
+                    // Xử lý chuyển hướng sau khi bấm "Có" (Đồng ý)
+                    if (target === 'blank') {
+                        window.open(url, '_blank'); // Mở tab/app mới (Zalo, Tele, Mess)
+                    } else {
+                        window.location.href = url; // Gọi điện (tel:) hoặc gửi Mail (mailto:)
+                    }
+                }
+            );
+
+            // Sửa lại chữ cho nút bấm phù hợp với yêu cầu
+            setTimeout(() => {
+                document.getElementById('modalBtnConfirm').textContent = "Có";
+                document.getElementById('modalBtnCancel').textContent = "Không";
+            }, 10);
+
+        } else {
+            // Fallback (Trường hợp khẩn cấp nếu web không load được file gốc)
+            if(confirm("Bạn có muốn liên hệ cho chúng tôi không?")) {
+                if (target === 'blank') {
+                    window.open(url, '_blank');
+                } else {
+                    window.location.href = url;
+                }
+            }
+        }
+    }
+</script>

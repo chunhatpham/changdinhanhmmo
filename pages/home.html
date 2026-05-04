@@ -1,0 +1,331 @@
+<style>
+    /* HIỆU ỨNG VÀ BỐ CỤC CHUNG */
+    .home-wrapper {
+        animation: fadeIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding-bottom: 20px;
+    }
+
+    /* 1. KHUNG HERO DASHBOARD */
+    .hero-dashboard {
+        display: grid; grid-template-columns: 1.2fr 1fr; gap: 15px;
+    }
+    .welcome-card {
+        background: linear-gradient(135deg, rgba(28,28,30,0.8) 0%, rgba(10,132,255,0.1) 100%);
+        backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 24px; padding: 30px; position: relative; overflow: hidden;
+        display: flex; flex-direction: column; justify-content: center;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+    .status-badge-online {
+        display: inline-flex; align-items: center; gap: 6px;
+        background: rgba(52, 199, 89, 0.15); color: #34C759;
+        padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 800;
+        width: fit-content; margin-bottom: 20px; border: 1px solid rgba(52, 199, 89, 0.3);
+    }
+    .status-badge-online::before { content: ''; width: 8px; height: 8px; background: #34C759; border-radius: 50%; box-shadow: 0 0 10px #34C759; }
+    
+    .welcome-title { color: #8e8e93; font-size: 16px; font-weight: 600; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+    .welcome-name { color: #fff; font-size: 32px; font-weight: 900; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+    .welcome-desc { color: #aaa; font-size: 14px; line-height: 1.5; margin-bottom: 25px; max-width: 90%; }
+    .welcome-desc strong { color: #0A84FF; }
+    
+    .hero-btn {
+        background: #0A84FF; color: #fff; border: none; padding: 14px 24px; border-radius: 14px;
+        font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 8px;
+        cursor: pointer; width: fit-content; transition: 0.3s; box-shadow: 0 8px 20px rgba(10,132,255,0.4);
+    }
+    .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(10,132,255,0.6); }
+
+    .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .metric-box {
+        background: rgba(28,28,30,0.7); backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.05); border-radius: 20px;
+        padding: 20px; display: flex; flex-direction: column; justify-content: center; transition: 0.3s;
+    }
+    .metric-box:hover { background: rgba(44,44,46,0.8); transform: translateY(-3px); }
+    .metric-title { color: #8e8e93; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+    .metric-value { font-size: 20px; font-weight: 900; font-family: 'Courier New', Courier, monospace; }
+    .val-blue { color: #0A84FF; } .val-green { color: #34C759; } .val-orange { color: #FF9F0A; } .val-white { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+
+    /* TIÊU ĐỀ CÁC MỤC CHUNG */
+    .section-title { color: #fff; font-size: 20px; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;}
+    .section-title::before { content: ''; width: 4px; height: 20px; background: #0A84FF; border-radius: 4px; }
+
+    /* 2. THANH TIỆN ÍCH NHANH (APP ICONS) */
+    .apps-grid { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .apps-grid::-webkit-scrollbar { display: none; }
+    .app-item { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 75px; scroll-snap-align: start; cursor: pointer; }
+    .app-icon { width: 60px; height: 60px; border-radius: 18px; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .app-item:hover .app-icon { transform: scale(1.1); }
+    .app-icon svg { width: 28px; height: 28px; fill: #fff; }
+    .app-name { color: #8e8e93; font-size: 12px; font-weight: 600; text-align: center; }
+
+    /* 3. DỊCH VỤ NỔI BẬT (HIỆU ỨNG PHỒNG NỀN 3D ĐẸP MẮT) */
+    .featured-services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .service-pop-card {
+        background: linear-gradient(145deg, rgba(40,40,45,0.9), rgba(20,20,25,0.9));
+        border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3); position: relative; overflow: hidden; cursor: pointer;
+    }
+    .service-pop-card::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at 50% 0%, rgba(10,132,255,0.2), transparent 70%);
+        opacity: 0; transition: 0.4s; pointer-events: none;
+    }
+    .service-pop-card:hover {
+        transform: translateY(-8px) scale(1.03); /* Hiệu ứng phồng lên */
+        box-shadow: 0 20px 40px rgba(10,132,255,0.2), inset 0 1px 1px rgba(255,255,255,0.1);
+        border-color: rgba(10,132,255,0.4);
+    }
+    .service-pop-card:hover::before { opacity: 1; }
+    .sp-icon { 
+        width: 56px; height: 56px; border-radius: 16px; margin: 0 auto 15px; 
+        display: flex; justify-content: center; align-items: center; position: relative; z-index: 2; 
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3); 
+    }
+    .sp-icon svg { width: 28px; height: 28px; fill: #fff; }
+    .sp-title { color: #fff; font-size: 15px; font-weight: 800; margin-bottom: 6px; position: relative; z-index: 2;}
+    .sp-desc { color: #8e8e93; font-size: 12px; line-height: 1.4; position: relative; z-index: 2;}
+
+    /* 4. GIỚI THIỆU TÍNH NĂNG (FEATURES) */
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .feature-card { background: rgba(28,28,30,0.5); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 25px 20px; text-align: center; transition: 0.3s; }
+    .feature-card:hover { border-color: rgba(10,132,255,0.3); background: rgba(28,28,30,0.9); }
+    .f-icon-wrapper { width: 50px; height: 50px; background: rgba(255,255,255,0.05); border-radius: 14px; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px; }
+    .f-icon-wrapper svg { width: 24px; height: 24px; }
+    .f-title { color: #fff; font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+    .f-desc { color: #8e8e93; font-size: 13px; line-height: 1.5; }
+
+    /* 5. BANNER KÊU GỌI HÀNH ĐỘNG (CẬP NHẬT GIAO DIỆN) */
+    .cta-banner {
+        background: linear-gradient(45deg, #0A84FF, #5E5CE6);
+        border-radius: 24px; padding: 35px 20px; text-align: center;
+        box-shadow: 0 15px 30px rgba(94, 92, 230, 0.3); margin-top: 10px;
+    }
+    .cta-banner h2 { color: #fff; font-size: 24px; font-weight: 900; margin-bottom: 10px; }
+    .cta-banner p { color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 20px; }
+    .cta-btn { background: #fff; color: #5E5CE6; border: none; padding: 14px 30px; border-radius: 20px; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: 0.3s;}
+    .cta-btn:hover { transform: scale(1.05); }
+
+    /* 6. CHÂN TRANG (FOOTER) CHUYÊN NGHIỆP */
+    .pro-footer {
+        margin-top: 10px; padding: 40px 20px 20px;
+        background: linear-gradient(180deg, transparent, rgba(10,132,255,0.05) 100%);
+        border-top: 1px solid rgba(255,255,255,0.05); text-align: center; border-radius: 30px 30px 0 0;
+    }
+    .footer-logo { font-size: 24px; font-weight: 900; letter-spacing: 1px; margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 5px;}
+    .footer-desc { color: #8e8e93; font-size: 13px; max-width: 500px; margin: 0 auto 20px; line-height: 1.6; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 25px; flex-wrap: wrap;}
+    .footer-links a { color: #0A84FF; text-decoration: none; font-size: 13px; font-weight: 700; transition: 0.2s;}
+    .footer-links a:hover { color: #fff; }
+    .footer-copyright { color: rgba(255,255,255,0.3); font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; font-weight: 600;}
+
+    /* RESPONSIVE CHO ĐIỆN THOẠI NHỎ */
+    @media (max-width: 768px) {
+        .hero-dashboard { grid-template-columns: 1fr; }
+        .features-grid { grid-template-columns: 1fr; }
+        .featured-services-grid { grid-template-columns: repeat(2, 1fr); }
+        .welcome-card { padding: 25px 20px; }
+    }
+</style>
+
+<div class="home-wrapper">
+    
+    <!-- 1. KHUNG HERO DASHBOARD (CHÀO MỪNG + THÔNG SỐ) -->
+    <div class="hero-dashboard">
+        <div class="welcome-card">
+            <div class="status-badge-online">HỆ THỐNG TRỰC TUYẾN</div>
+            <div class="welcome-title">Chào mừng trở lại,</div>
+            <div class="welcome-name" id="homeUserName">KHÁCH</div>
+            <p class="welcome-desc">Hệ thống <strong style="text-transform: uppercase;">CHANGDINHANHMMO</strong> đã sẵn sàng hỗ trợ bạn tối ưu hóa công việc kinh doanh và quản lý tài nguyên số chuyên nghiệp.</p>
+            <div id="homeAuthAction"></div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-box">
+                <div class="metric-title">Số Dư Khả Dụng</div>
+                <div class="metric-value val-blue" id="homeBalance">0 ₫</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-title">Tổng Nạp Tích Luỹ</div>
+                <div class="metric-value val-green" id="homeTotalDep">0 ₫</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-title">Tổng Chi Tiêu</div>
+                <div class="metric-value val-orange" id="homeTotalSpent">0 ₫</div>
+            </div>
+            <div class="metric-box" style="background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,215,0,0.05)); border-color: rgba(255,215,0,0.2);">
+                <div class="metric-title" style="color: #FFD700;">Cấp Bậc Tài Khoản</div>
+                <div class="metric-value val-white" id="homeVipLevel">CHƯA ĐĂNG NHẬP</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. THANH TIỆN ÍCH NHANH (APP ICONS) -->
+    <div>
+        <h3 class="section-title">Tiện Ích Nhanh</h3>
+        <div class="apps-grid">
+            <div class="app-item" onclick="window.navigateTo('pages/balance/deposit.html')">
+                <div class="app-icon" style="background: linear-gradient(135deg, #34C759, #28a745);"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></div>
+                <div class="app-name">Nạp Tiền</div>
+            </div>
+            <div class="app-item" onclick="window.navigateTo('pages/services/facebook.html')">
+                <div class="app-icon" style="background: linear-gradient(135deg, #0A84FF, #0056b3);"><svg viewBox="0 0 24 24"><path d="M16.5 15.5l.5-3.5h-3.3v-2.3c0-.9.5-1.9 2-1.9h1.5v-3s-1.4-.2-2.7-.2c-2.7 0-4.5 1.7-4.5 4.7v2.6h-3v3.5h3v8.4c1 .1 2 .2 3 .2s2-.1 3-.2v-8.4h2.5z"/></svg></div>
+                <div class="app-name">Facebook</div>
+            </div>
+            <div class="app-item" onclick="window.navigateTo('pages/services/tiktok.html')">
+                <div class="app-icon" style="background: #000;"><svg viewBox="0 0 24 24"><path fill="#FE2C55" d="M16.8 9.3c-1.3-.1-2.5-.7-3.4-1.5V16c0 3.3-2.7 6-6 6s-6-2.7-6-6 2.7-6 6-6c.2 0 .5 0 .7.1v3.2c-.2-.1-.5-.1-.7-.1-1.6 0-2.8 1.3-2.8 2.8 0 1.6 1.3 2.8 2.8 2.8 1.6 0 2.8-1.3 2.8-2.8V2h3.2c.4 2.2 2.2 3.9 4.4 4.3v3z"/><path fill="#25F4EE" d="M17.8 8.3c-1.3-.1-2.5-.7-3.4-1.5V15c0 3.3-2.7 6-6 6s-6-2.7-6-6 2.7-6 6-6c.2 0 .5 0 .7.1v3.2c-.2-.1-.5-.1-.7-.1-1.6 0-2.8 1.3-2.8 2.8 0 1.6 1.3 2.8 2.8 2.8 1.6 0 2.8-1.3 2.8-2.8V1.5h3.2c.4 2.2 2.2 3.9 4.4 4.3v3z"/></svg></div>
+                <div class="app-name">TikTok</div>
+            </div>
+            <div class="app-item" onclick="window.navigateTo('pages/balance/history.html')">
+                <div class="app-icon" style="background: linear-gradient(135deg, #FF9F0A, #FF2D55);"><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg></div>
+                <div class="app-name">Lịch Sử</div>
+            </div>
+            <div class="app-item" onclick="window.navigateTo('pages/account/vip.html')">
+                <div class="app-icon" style="background: linear-gradient(135deg, #FFD700, #F5AF19);"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+                <div class="app-name">Cấp VIP</div>
+            </div>
+            <div class="app-item" onclick="window.navigateTo('pages/contact/chat.html')">
+                <div class="app-icon" style="background: linear-gradient(135deg, #5E5CE6, #AF52DE);"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg></div>
+                <div class="app-name">Hỗ Trợ AI</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. MỤC DỊCH VỤ NỔI BẬT (MỚI THÊM) -->
+    <div>
+        <h3 class="section-title">Dịch Vụ Nổi Bật</h3>
+        <div class="featured-services-grid">
+            <div class="service-pop-card" onclick="document.getElementById('dichVuToggle').click(); document.getElementById('hamburgerMenuBtn').click();">
+                <div class="sp-icon" style="background: linear-gradient(135deg, #FF2D55, #FF375F);"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+                <div class="sp-title">Tăng Tương Tác</div>
+                <div class="sp-desc">Tăng like, share, follow, view trên mọi nền tảng siêu tốc.</div>
+            </div>
+            
+            <div class="service-pop-card" onclick="document.getElementById('dichVuToggle').click(); document.getElementById('hamburgerMenuBtn').click();">
+                <div class="sp-icon" style="background: linear-gradient(135deg, #0A84FF, #00C6FF);"><svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg></div>
+                <div class="sp-title">Auto Mạng Xã Hội</div>
+                <div class="sp-desc">Hệ thống Bot tự động tương tác, seeding theo kịch bản thông minh.</div>
+            </div>
+
+            <div class="service-pop-card" onclick="window.showCustomModal('Thông Báo', 'Dịch vụ Tài Nguyên đang cập nhật!', 'alert')">
+                <div class="sp-icon" style="background: linear-gradient(135deg, #FF9F0A, #FFD60A);"><svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg></div>
+                <div class="sp-title">Tài Nguyên MMO</div>
+                <div class="sp-desc">Cung cấp Via, Clone, BM, Mail cổ, Acc ngoại chất lượng cao.</div>
+            </div>
+
+            <div class="service-pop-card" onclick="window.showCustomModal('Thông Báo', 'Dịch vụ VPS đang cập nhật!', 'alert')">
+                <div class="sp-icon" style="background: linear-gradient(135deg, #5E5CE6, #AF52DE);"><svg viewBox="0 0 24 24"><path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/></svg></div>
+                <div class="sp-title">Cho Thuê VPS</div>
+                <div class="sp-desc">Hệ thống máy chủ ảo tốc độ cao, IP sạch nuôi tài khoản an toàn.</div>
+            </div>
+
+            <div class="service-pop-card" onclick="window.showCustomModal('Thông Báo', 'Shop Game đang cập nhật!', 'alert')">
+                <div class="sp-icon" style="background: linear-gradient(135deg, #30D158, #34C759);"><svg viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
+                <div class="sp-title">Mua Bán Game</div>
+                <div class="sp-desc">Mua bán tài khoản, vật phẩm game tự động, giao dịch bảo mật.</div>
+            </div>
+
+            <div class="service-pop-card" onclick="window.showCustomModal('Thông Báo', 'Khóa học MMO đang cập nhật!', 'alert')">
+                <div class="sp-icon" style="background: linear-gradient(135deg, #FF453A, #FF375F);"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg></div>
+                <div class="sp-title">Khóa Học MMO</div>
+                <div class="sp-desc">Đào tạo kinh doanh online, kiến thức MMO thực chiến 1-1.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. LÝ DO CHỌN HỆ THỐNG -->
+    <div>
+        <h3 class="section-title">Tại Sao Nên Chọn Chúng Tôi?</h3>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="f-icon-wrapper" style="color: #34C759;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+                <div class="f-title">Bảo Mật Tuyệt Đối</div>
+                <div class="f-desc">Dữ liệu của bạn được mã hóa hoàn toàn. Hệ thống vận hành tự động, an toàn 100% không lo khóa nick.</div>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon-wrapper" style="color: #0A84FF;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3L4 14h7v7l9-11h-7z"/></svg></div>
+                <div class="f-title">Tốc Độ Tối Đa</div>
+                <div class="f-desc">Xử lý hàng ngàn đơn hàng cùng lúc. Nạp tiền tự động duyệt trong 3 giây. Đẩy tương tác cực nhanh.</div>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon-wrapper" style="color: #FF9F0A;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></div>
+                <div class="f-title">Hỗ Trợ 24/7</div>
+                <div class="f-desc">Đội ngũ Admin cùng hệ thống Chatbot AI thế hệ mới túc trực xử lý vấn đề của bạn bất kể ngày đêm.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. BANNER KÊU GỌI HÀNH ĐỘNG -->
+    <div class="cta-banner" id="homeCtaBanner">
+        <h2>Trải Nghiệm Dịch Vụ Ngay Hôm Nay!</h2>
+        <p>Tạo tài khoản miễn phí để nhận ngay ưu đãi và nâng cấp hạng VIP siêu tốc.</p>
+        <button class="cta-btn" onclick="window.navigateTo('pages/account/register.html')">Tạo Tài Khoản Mới</button>
+    </div>
+
+    <!-- 6. CHÂN TRANG (FOOTER) CHUYÊN NGHIỆP -->
+    <footer class="pro-footer">
+        <div class="footer-logo">
+            <span style="color: #0A84FF;">CHANG</span><span style="color: #fff;">DINHANHMMO</span>
+        </div>
+        <p class="footer-desc">
+            Hệ thống cung cấp giải pháp Mạng Xã Hội, Dịch vụ MMO, cung cấp Tài Nguyên & VPS hàng đầu Việt Nam. Nhanh chóng - Bảo mật - Chuyên nghiệp.
+        </p>
+        <div class="footer-links">
+            <a href="javascript:void(0)" onclick="document.getElementById('chinhSachToggle').click(); document.getElementById('hamburgerMenuBtn').click();">Chính sách bảo mật</a>
+            <a href="javascript:void(0)" onclick="document.getElementById('chinhSachToggle').click(); document.getElementById('hamburgerMenuBtn').click();">Điều khoản sử dụng</a>
+            <a href="javascript:void(0)" onclick="document.getElementById('doiTacToggle').click(); document.getElementById('hamburgerMenuBtn').click();">Hợp tác & Đại lý</a>
+            <a href="javascript:void(0)" onclick="window.navigateTo('pages/contact/chat.html')">Liên hệ Hỗ trợ</a>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2026 CHANGDINHANHMMO. All rights reserved.
+        </div>
+    </footer>
+
+</div>
+
+<!-- SCRIPT LOGIC ĐỔ DỮ LIỆU ĐỘNG -->
+<script>
+    (function initHome() {
+        if (window.isLoggedIn && window.currentUser) {
+            document.getElementById('homeUserName').textContent = window.currentUser.name.toUpperCase();
+            
+            document.getElementById('homeBalance').textContent = window.formatCurrency(window.currentUser.balance);
+            document.getElementById('homeTotalDep').textContent = window.formatCurrency(window.currentUser.totalDeposit || 0);
+            document.getElementById('homeTotalSpent').textContent = window.formatCurrency(window.currentUser.totalSpent || 0);
+            
+            const vip = window.getVipInfo();
+            const vipEl = document.getElementById('homeVipLevel');
+            vipEl.textContent = vip.name.toUpperCase();
+            vipEl.style.color = vip.color;
+
+            document.getElementById('homeAuthAction').innerHTML = `
+                <button class="hero-btn" onclick="document.getElementById('dichVuToggle').click(); document.getElementById('hamburgerMenuBtn').click();">
+                    Khám Phá Dịch Vụ 
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                </button>
+            `;
+            document.getElementById('homeCtaBanner').style.display = 'none';
+
+        } else {
+            document.getElementById('homeUserName').textContent = "KHÁCH";
+            document.getElementById('homeBalance').textContent = "0 ₫";
+            document.getElementById('homeTotalDep').textContent = "0 ₫";
+            document.getElementById('homeTotalSpent').textContent = "0 ₫";
+            document.getElementById('homeVipLevel').textContent = "CHƯA ĐĂNG NHẬP";
+            document.getElementById('homeVipLevel').style.color = "#8e8e93";
+
+            document.getElementById('homeAuthAction').innerHTML = `
+                <button class="hero-btn" onclick="window.navigateTo('pages/account/login.html')">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/></svg>
+                    Đăng Nhập Ngay
+                </button>
+            `;
+            document.getElementById('homeCtaBanner').style.display = 'block';
+        }
+    })();
+</script>

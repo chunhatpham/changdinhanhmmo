@@ -1,0 +1,390 @@
+<style>
+    /* BỐ CỤC CHUNG PHONG CÁCH KÍNH MỜ (GLASSMORPHISM) */
+    .policy-wrapper {
+        animation: fadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding-bottom: 50px;
+        max-width: 850px;
+        margin: 0 auto;
+    }
+
+    /* HEADER CHÍNH SÁCH - TONE MÀU TÍM/XANH (PURPLE/BLUE) */
+    .policy-header {
+        text-align: center;
+        margin-bottom: 35px;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, rgba(175, 82, 222, 0.15), rgba(0, 0, 0, 0));
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .policy-header h1 {
+        color: #fff;
+        font-size: 26px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        background: linear-gradient(to right, #fff, #AF52DE);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .policy-date {
+        color: #8e8e93;
+        font-size: 14px;
+        font-weight: 600;
+        font-style: italic;
+        line-height: 1.5;
+    }
+
+    /* CHƯƠNG (SECTION) */
+    .policy-section {
+        margin-bottom: 30px;
+    }
+    .section-name {
+        color: #AF52DE;
+        font-size: 15px;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-left: 15px;
+        margin-bottom: 12px;
+        letter-spacing: 1.5px;
+    }
+
+    /* DANH SÁCH ĐIỀU KHOẢN DẠNG CARD ACCORDION */
+    .policy-list {
+        background: rgba(28, 28, 30, 0.6);
+        backdrop-filter: blur(25px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .policy-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: 0.3s;
+    }
+    .policy-item:last-child { border-bottom: none; }
+
+    /* TIÊU ĐỀ ĐIỀU KHOẢN (HEADER ACCORDION) */
+    .item-header {
+        padding: 18px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .item-header:hover { background: rgba(255, 255, 255, 0.03); }
+    
+    .item-title-box { display: flex; align-items: center; gap: 15px; }
+    .item-num {
+        width: 35px; height: 35px; flex-shrink: 0;
+        background: rgba(175, 82, 222, 0.15);
+        color: #AF52DE;
+        border-radius: 10px;
+        display: flex; justify-content: center; align-items: center;
+        font-size: 13px; font-weight: 900;
+        border: 1px solid rgba(175, 82, 222, 0.3);
+        transition: 0.3s;
+    }
+    .item-title {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+    .item-chevron {
+        color: #48484a;
+        font-size: 14px;
+        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* NỘI DUNG CHI TIẾT CỦA TỪNG ĐIỀU KHOẢN */
+    .item-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(0, 0, 0, 0.25);
+    }
+    .content-inner {
+        padding: 25px 20px;
+        color: #aeaeb2;
+        font-size: 14.5px;
+        line-height: 1.8;
+    }
+    .content-inner strong { color: #fff; font-weight: 700;}
+    .content-inner p { margin-bottom: 12px; }
+    .content-inner p:last-child { margin-bottom: 0; }
+    .content-inner ul { padding-left: 20px; margin-bottom: 12px; list-style-type: disc;}
+    .content-inner li { margin-bottom: 8px; }
+    .content-inner li:last-child { margin-bottom: 0; }
+
+    /* TRẠNG THÁI KHI CLICK MỞ RA (ACTIVE) */
+    .policy-item.active { background: rgba(175, 82, 222, 0.05); }
+    .policy-item.active .item-content { max-height: 2500px; border-top: 1px dashed rgba(255,255,255,0.05); }
+    .policy-item.active .item-chevron { transform: rotate(180deg); color: #AF52DE; }
+    .policy-item.active .item-num { background: #AF52DE; color: #fff; box-shadow: 0 5px 15px rgba(175, 82, 222, 0.4); }
+
+    /* FOOTER TRANG */
+    .policy-footer {
+        margin-top: 50px;
+        padding: 30px 20px;
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(28,28,30,0.5);
+        border-radius: 20px;
+    }
+    .policy-footer p { color: #8e8e93; font-size: 14px; margin-bottom: 15px; line-height: 1.6;}
+    .footer-brand { color: #AF52DE; font-weight: 900; font-size: 20px; letter-spacing: 2px; }
+
+    /* Reponsive Mobile */
+    @media (max-width: 600px) {
+        .item-title { font-size: 14px; }
+        .content-inner { font-size: 13.5px; padding: 20px 15px;}
+        .item-num { width: 30px; height: 30px; font-size: 12px; }
+    }
+</style>
+
+<div class="policy-wrapper">
+    
+    <!-- HEADER -->
+    <header class="policy-header">
+        <h1>Chính Sách & Điều Khoản Sử Dụng Dịch Vụ</h1>
+        <div class="policy-date">Áp dụng chuyên biệt cho: DỊCH VỤ AUTO MẠNG XÃ HỘI<br>Tuân thủ Nghị định 13/2023/NĐ-CP & Luật An ninh mạng 2018</div>
+    </header>
+
+    <div style="text-align:center; color:#8e8e93; font-size:14px; margin-bottom:30px; line-height:1.6; padding: 0 10px;">
+        Văn bản này quy định các điều khoản sử dụng dịch vụ, chính sách bảo mật thông tin và chính sách xử lý dữ liệu cá nhân áp dụng đối với toàn bộ người dùng khi truy cập, đăng ký tài khoản, nạp tiền, tạo đơn hàng và sử dụng bất kỳ dịch vụ nào tại <strong>CHANGDINHANHMMO.COM</strong>.<br><br>
+        Việc Người dùng thực hiện một trong các hành vi: đăng ký, đăng nhập, nạp tiền, tạo đơn hoặc sử dụng dịch vụ được hiểu là Người dùng đã đọc, hiểu và đồng ý chịu sự ràng buộc toàn bộ nội dung của Chính sách này.
+    </div>
+
+    <!-- PHẦN A: ĐIỀU KHOẢN SỬ DỤNG DỊCH VỤ -->
+    <div class="policy-section">
+        <div class="section-name">A. Điều Khoản Sử Dụng Dịch Vụ</div>
+        <div class="policy-list">
+            
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">01</div><div class="item-title">Giải thích thuật ngữ & Phạm vi áp dụng</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>1.1. <strong>“Hệ thống”</strong> là nền tảng phần mềm/website do <strong>CHANGDINHANHMMO.COM</strong> quản lý, vận hành và cung cấp dịch vụ Auto Mạng Xã Hội.</p>
+                        <p>1.2. <strong>“Người dùng”</strong> là cá nhân/tổ chức đăng ký tài khoản, truy cập, nạp tiền, tạo đơn hàng trên Hệ thống.</p>
+                        <p>1.3. <strong>“Dịch vụ Report”</strong> là dịch vụ hỗ trợ thao tác báo cáo tài khoản/nội dung xử lý nhanh theo cơ chế tự động/bán tự động.</p>
+                        <p>1.4. Chính sách này áp dụng đối với toàn bộ Người dùng khi sử dụng dịch vụ, thay thế cho mọi thỏa thuận trước đó. Trường hợp không đồng ý, Người dùng có trách nhiệm dừng ngay việc sử dụng Hệ thống.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">02</div><div class="item-title">Mô tả và danh mục dịch vụ</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Hệ thống cung cấp các dịch vụ Auto MXH bao gồm nhưng không giới hạn:</p>
+                        <ul>
+                            <li><strong>Xóa/Xử lý thực thể:</strong> Xóa Profile thường/chuyên nghiệp, Fanpage, Group, Locked, Bài viết.</li>
+                            <li><strong>Xác minh/Tích xanh:</strong> Lên Tích xanh Profile (KBH/BH), Tích xanh chính chủ, Meta Verify.</li>
+                            <li><strong>Tương tác:</strong> Auto Friend, Lọc bạn bè, Chọc bạn bè.</li>
+                            <li><strong>Bảo vệ/Xác thực:</strong> Verify bảo vệ tài khoản Facebook.</li>
+                            <li><strong>Mở khóa/Khôi phục:</strong> Mở khóa két chính chủ/không chính chủ, Đình chỉ, FAQ vô hiệu hóa, Lấy lại FB hack.</li>
+                            <li><strong>Thay đổi thông tin:</strong> Change Mail, SĐT, Kick thiết bị lạ, Đổi 2FA, Ngày sinh, Đổi tên.</li>
+                            <li><strong>Kỹ thuật khác:</strong> Tự sát FAQ, Nhạc STR.</li>
+                        </ul>
+                        <p>Danh mục có thể thay đổi tùy chính sách của nền tảng bên thứ ba (Meta, Google, TikTok...). <strong>CHANGDINHANHMMO.COM</strong> không cam kết tuyệt đối về kết quả nếu thuật toán MXH thay đổi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">03</div><div class="item-title">Cơ chế tạo đơn và thực hiện dịch vụ</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>3.1. Đơn hàng chỉ được tiếp nhận sau khi Người dùng thanh toán đủ phí (trừ trực tiếp vào số dư).</p>
+                        <p>3.2. Thời gian xử lý phụ thuộc vào tình trạng nền tảng bên thứ ba. Thời gian hiển thị trên Hệ thống chỉ mang tính tham khảo.</p>
+                        <p>3.3. Người dùng có nghĩa vụ kiểm tra đúng loại dịch vụ và dữ liệu nhập vào (Link, UID...). Mọi sai sót do Người dùng, Hệ thống không chịu trách nhiệm hoàn tiền.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">04</div><div class="item-title">Quy định riêng đối với Dịch vụ Report</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>4.1. Nhằm tối ưu tốc độ, <strong>CHANGDINHANHMMO.COM</strong> KHÔNG yêu cầu Người dùng cung cấp bằng chứng hay giấy tờ pháp lý khi dùng Dịch vụ Report.</p>
+                        <p>4.2. Việc bấm "Tạo đơn" đồng nghĩa Người dùng cam kết: yêu cầu hợp pháp, không vu khống, không xâm hại quyền lợi bên thứ ba.</p>
+                        <p>4.3. Người dùng tự chịu toàn bộ trách nhiệm trước pháp luật Việt Nam nếu dùng dịch vụ sai mục đích. Hệ thống từ chối mọi rủi ro pháp lý và có quyền hủy đơn nếu phát hiện gian lận.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">05</div><div class="item-title">Nghiêm cấm tuyệt đối</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Người dùng bị nghiêm cấm sử dụng Hệ thống vào các mục đích:</p>
+                        <ul>
+                            <li>Lừa đảo, chiếm đoạt tài sản, rửa tiền, đánh bạc.</li>
+                            <li>Tống tiền, đe dọa, mạo danh cá nhân/tổ chức.</li>
+                            <li>Phá hoại, phát tán mã độc, hack, spam gây nghẽn hệ thống.</li>
+                            <li>Xâm phạm danh dự, nhân phẩm, quyền sở hữu trí tuệ của cá nhân/tổ chức.</li>
+                            <li>Mọi hành vi vi phạm Luật An ninh mạng và pháp luật Việt Nam hiện hành.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">06</div><div class="item-title">Phí dịch vụ, Thanh toán & Hoàn tiền</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>6.1. Tiền đã nạp vào Hệ thống được quy đổi thành số dư và <strong>KHÔNG được hoàn lại</strong> bằng tiền mặt/chuyển khoản dưới mọi hình thức.</p>
+                        <p>6.2. <strong>Chính sách Bảo hành & Hoàn tiền:</strong> Chỉ bảo hành đối với dịch vụ có ghi rõ "Bảo hành" trên Hệ thống.</p>
+                        <p>6.3. KHÔNG HOÀN TIỀN trong các trường hợp:</p>
+                        <ul>
+                            <li>Đổi ý hoặc cung cấp sai thông tin Link/UID/Dữ liệu.</li>
+                            <li>Tài khoản bị khóa do lịch sử vi phạm của khách hàng.</li>
+                            <li>Lỗi từ nền tảng bên thứ ba (Facebook thay đổi thuật toán).</li>
+                            <li>Đơn hàng đang xử lý hoặc đã hoàn tất.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PHẦN B & C: BẢO MẬT VÀ XỬ LÝ DỮ LIỆU -->
+    <div class="policy-section">
+        <div class="section-name">B. Bảo mật & Xử lý Dữ liệu Cá nhân</div>
+        <div class="policy-list">
+            
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">07</div><div class="item-title">Bảo mật thông tin & Thu thập dữ liệu</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Hệ thống thu thập dữ liệu cơ bản (Email, SĐT, IP) và dữ liệu nhạy cảm phục vụ xử lý dịch vụ (Token, Cookie, 2FA). Việc cung cấp là hoàn toàn tự nguyện để hoàn tất đơn hàng.</p>
+                        <p><strong>CHANGDINHANHMMO.COM</strong> cam kết mã hóa dữ liệu, không bán hay chia sẻ thông tin cho bên thứ ba vì mục đích thương mại trái phép.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">08</div><div class="item-title">Quyền và Trách nhiệm xử lý dữ liệu</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Người dùng có quyền truy cập, yêu cầu chỉnh sửa hoặc xóa dữ liệu theo quy định pháp luật.</p>
+                        <p>Tuy nhiên, Hệ thống có quyền (và nghĩa vụ) cung cấp dữ liệu, thông tin liên quan cho cơ quan Nhà nước có thẩm quyền khi có yêu cầu hợp pháp để phục vụ công tác điều tra.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PHẦN D & E: QUYỀN LỢI VÀ MIỄN TRỪ TRÁCH NHIỆM -->
+    <div class="policy-section">
+        <div class="section-name">C. Quyền & Miễn Trừ Trách Nhiệm</div>
+        <div class="policy-list">
+            
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">09</div><div class="item-title">Quyền và Nghĩa vụ hai bên</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p><strong>Với Người dùng:</strong> Phải là chủ sở hữu hợp pháp của nội dung cần xử lý. Tự chịu trách nhiệm hoàn toàn về mục đích sử dụng.</p>
+                        <p><strong>Với CHANGDINHANHMMO.COM:</strong> Có quyền tạm khóa, chấm dứt tài khoản, hủy đơn nếu phát hiện gian lận. Có nghĩa vụ vận hành dịch vụ đúng mô tả.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">10</div><div class="item-title">Tuyên bố miễn trừ trách nhiệm</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p><strong>CHANGDINHANHMMO.COM</strong> KHÔNG phải là Facebook/Meta hay đại diện của MXH. Chúng tôi không chịu trách nhiệm nếu tài khoản bị checkpoint, vô hiệu hóa sau khi dịch vụ đã hoàn tất.</p>
+                        <p>Miễn trừ trách nhiệm trong các sự kiện bất khả kháng: đứt cáp quang, tấn công mạng, thay đổi thuật toán toàn cầu. Tổng bồi thường (nếu có lỗi từ Hệ thống) không bao giờ vượt quá phí dịch vụ của đơn hàng đó.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PHẦN F & G: KHIẾU NẠI VÀ ĐIỀU KHOẢN CHUNG -->
+    <div class="policy-section">
+        <div class="section-name">D. Giải Quyết Khiếu Nại & Điều Khoản Chung</div>
+        <div class="policy-list">
+            
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">11</div><div class="item-title">Cơ chế khiếu nại & Tranh chấp</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Người dùng có quyền khiếu nại trong thời hạn <strong>03 ngày</strong> kể từ khi đơn hàng báo trạng thái "Hoàn tất". Quá hạn sẽ bị từ chối xử lý.</p>
+                        <p>Quyết định xử lý của Hệ thống dựa trên dữ liệu lưu trữ (Log) là căn cứ cuối cùng.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-item" onclick="toggleServicePolicy(this)">
+                <div class="item-header">
+                    <div class="item-title-box"><div class="item-num">12</div><div class="item-title">Cập nhật chính sách & Chấm dứt dịch vụ</div></div>
+                    <div class="item-chevron">▼</div>
+                </div>
+                <div class="item-content">
+                    <div class="content-inner">
+                        <p>Hệ thống có quyền sửa đổi Chính sách này bất kỳ lúc nào. Việc tiếp tục sử dụng đồng nghĩa với việc chấp nhận phiên bản mới.</p>
+                        <p>Chúng tôi có quyền tạm ngưng hoặc chấm dứt cung cấp dịch vụ vĩnh viễn (không hoàn tiền) nếu người dùng có hành vi vi phạm pháp luật hoặc gây rủi ro an ninh mạng.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER XÁC NHẬN -->
+    <footer class="policy-footer">
+        <p>Việc tích chọn "Đồng ý" hoặc bấm nút "Tạo đơn" được hiểu là Người dùng đã chấp thuận toàn bộ nội dung Chính sách và xác lập giao dịch điện tử có giá trị pháp lý.</p>
+        <div class="footer-brand">CHANGDINHANHMMO.COM</div>
+    </footer>
+
+</div>
+
+<script>
+    // Hàm mở/đóng Accordion siêu mượt
+    function toggleServicePolicy(element) {
+        // Mở hoặc đóng nội dung của thẻ được click
+        element.classList.toggle('active');
+    }
+</script>
