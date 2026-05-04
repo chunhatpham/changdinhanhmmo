@@ -1,0 +1,281 @@
+<style>
+    .order-wrapper { animation: fadeIn 0.4s ease; padding-bottom: 40px; }
+    
+    /* HEADER KHU VỰC ĐẶT HÀNG */
+    .order-header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+    .back-btn { width: 45px; height: 45px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; cursor: pointer; color: #fff; transition: 0.2s; }
+    .back-btn:hover { background: rgba(10,132,255,0.2); border-color: #0A84FF; color: #0A84FF;}
+    .order-title-box { display: flex; align-items: center; gap: 12px; }
+    .cart-icon { width: 45px; height: 45px; background: rgba(10,132,255,0.15); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #0A84FF; border: 1px solid rgba(10,132,255,0.3); }
+    .cart-icon svg { width: 22px; height: 22px; fill: currentColor; }
+    .o-title { color: #fff; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; margin-bottom: 2px;}
+    .o-subtitle { color: #0A84FF; font-size: 13px; font-weight: 600; font-style: italic;}
+
+    /* INPUT CHUYÊN NGHIỆP */
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    .input-group label { color: #8e8e93; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+    .custom-input { background: rgba(10, 10, 12, 0.6); border: 1px solid rgba(255,255,255,0.08); padding: 16px 20px; border-radius: 16px; color: #fff; font-size: 15px; outline: none; transition: 0.3s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);}
+    .custom-input:focus { border-color: #0A84FF; box-shadow: 0 0 15px rgba(10,132,255,0.2), inset 0 2px 5px rgba(0,0,0,0.5); }
+    .custom-input::placeholder { color: rgba(255,255,255,0.2); }
+
+    /* CHỌN GÓI DỊCH VỤ (RADIO CARDS) */
+    .section-label { color: #fff; font-size: 16px; font-weight: 800; margin-bottom: 15px; }
+    .pkg-container { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .pkg-card { background: rgba(28,28,30,0.8); border: 1px solid rgba(255,255,255,0.05); padding: 18px 20px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; }
+    .pkg-card:hover { background: rgba(40,40,45,0.9); }
+    .pkg-card.active { background: rgba(10,132,255,0.08); border-color: #0A84FF; box-shadow: 0 10px 25px rgba(10,132,255,0.15); }
+    
+    .pkg-left { display: flex; align-items: center; gap: 15px; }
+    .radio-circle { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #555; position: relative; transition: 0.2s;}
+    .pkg-card.active .radio-circle { border-color: #0A84FF; }
+    .pkg-card.active .radio-circle::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #0A84FF; border-radius: 50%; }
+    .pkg-name { color: #fff; font-weight: 700; font-size: 15px; }
+    .pkg-price { color: #34C759; font-weight: 900; font-size: 16px; font-family: 'Courier New', monospace; display: flex; align-items: center; gap: 8px;}
+    .pkg-card.active .pkg-price { color: #0A84FF; }
+
+    /* CHI TIẾT GÓI MỞ RỘNG */
+    .pkg-details { background: rgba(255,215,0,0.05); border: 1px dashed rgba(255,215,0,0.3); padding: 20px; border-radius: 16px; margin-bottom: 30px; display: none; animation: fadeInDown 0.3s ease;}
+    .pkg-details.active { display: block; }
+    .d-title { color: #FFD700; font-weight: 800; font-size: 14px; margin-bottom: 10px; text-transform: uppercase;}
+    .d-list { color: #e5e5ea; font-size: 14px; line-height: 1.8; list-style-type: none; padding: 0;}
+    .d-list li { position: relative; padding-left: 20px; }
+    .d-list li::before { content: '›'; position: absolute; left: 0; color: #FFD700; font-weight: bold;}
+
+    /* BILL THANH TOÁN & ĐIỀU KHOẢN */
+    .terms-box { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; cursor: pointer; }
+    .terms-box input[type="checkbox"] { width: 18px; height: 18px; accent-color: #0A84FF; cursor: pointer;}
+    .terms-box label { color: #8e8e93; font-size: 13px; font-weight: 600; text-transform: uppercase; cursor: pointer;}
+
+    .bill-summary { background: linear-gradient(180deg, rgba(20,20,25,0.9), rgba(10,10,12,0.9)); border: 1px solid rgba(52,199,89,0.2); border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+    .bill-row { display: flex; justify-content: space-between; padding: 10px 0; color: #aaa; font-size: 14px; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+    .bill-row:last-child { border-bottom: none; }
+    .bill-row.total { margin-top: 10px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); align-items: center; }
+    .b-label { font-weight: 600; }
+    .b-val { font-family: monospace; font-weight: bold; color: #fff;}
+    .total-label { color: #34C759; font-weight: 900; font-size: 16px; text-transform: uppercase; }
+    .total-val { color: #34C759; font-size: 26px; font-weight: 900; text-shadow: 0 0 10px rgba(52,199,89,0.3); }
+
+    .btn-submit-order { width: 100%; background: linear-gradient(135deg, #0068FF, #00C6FF); color: #fff; border: none; padding: 18px; border-radius: 18px; font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(10,132,255,0.4); transition: 0.3s;}
+    .btn-submit-order:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(10,132,255,0.6); }
+    .btn-submit-order svg { width: 22px; height: 22px; fill: currentColor; }
+
+    /* BẢNG LỊCH SỬ GẦN ĐÂY */
+    .recent-history-section { margin-top: 50px; background: rgba(28,28,30,0.5); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
+    .hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .hist-header h3 { color: #fff; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;}
+    .hist-header h3 svg { width: 20px; height: 20px; fill: #8e8e93; }
+    .btn-refresh { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #8e8e93; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s;}
+    .btn-refresh:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    
+    .table-container { overflow-x: auto; }
+    .custom-table { width: 100%; min-width: 600px; border-collapse: collapse; }
+    .custom-table th { background: rgba(0,0,0,0.3); color: #8e8e93; padding: 12px 15px; text-align: left; font-size: 12px; text-transform: uppercase; }
+    .custom-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #fff; font-size: 14px; }
+    .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase;}
+    .st-processing { background: rgba(255, 159, 10, 0.15); color: #FF9F0A; border: 1px solid rgba(255, 159, 10, 0.3); }
+    .st-success { background: rgba(52, 199, 89, 0.15); color: #34C759; border: 1px solid rgba(52, 199, 89, 0.3); }
+
+    @media (max-width: 600px) { .input-grid { grid-template-columns: 1fr; gap: 15px; } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<div class="order-wrapper">
+    
+    <!-- HEADER -->
+    <div class="order-header">
+        <button class="back-btn" onclick="window.navigateTo('pages/services/facebook.html')">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+        </button>
+        <div class="order-title-box">
+            <div class="cart-icon"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></div>
+            <div>
+                <div class="o-title">KHU VỰC ĐẶT HÀNG</div>
+                <div class="o-subtitle">Tất cả đơn hàng đều được xử lý tự động 24/7.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM THÔNG TIN -->
+    <div class="input-grid">
+        <div class="input-group">
+            <label>Thông tin tài khoản</label>
+            <input type="text" id="orderAccInfo" class="custom-input" placeholder="Cookie hoặc id|pass|2fa">
+        </div>
+        <div class="input-group">
+            <label>Thông tin liên hệ</label>
+            <input type="text" id="orderContactInfo" class="custom-input" placeholder="Sdt (Zalo) hoặc id (Telegram)">
+        </div>
+    </div>
+
+    <!-- CHỌN GÓI -->
+    <div class="section-label">CHỌN MÁY CHỦ DỊCH VỤ:</div>
+    <div class="pkg-container">
+        <!-- Gói 1: 1,380,000 (Đã tăng 15%) -->
+        <div class="pkg-card" id="pkg1" onclick="selectPackage(1, 1380000, 'Lên Tick Xanh Chính Chủ ( Không Bảo Hành )')">
+            <div class="pkg-left">
+                <div class="radio-circle"></div>
+                <div class="pkg-name">Lên Tick Xanh Chính Chủ (Không Bảo Hành)</div>
+            </div>
+            <div class="pkg-price">1.380.000₫ <span style="font-size:12px; color:#8e8e93;">▼</span></div>
+        </div>
+
+        <!-- Gói 2: 2,242,500 (Đã tăng 15%) -->
+        <div class="pkg-card" id="pkg2" onclick="selectPackage(2, 2242500, 'Lên Tick Xanh Chính Chủ ( Có Bảo Hành )')">
+            <div class="pkg-left">
+                <div class="radio-circle"></div>
+                <div class="pkg-name">Lên Tick Xanh Chính Chủ (Có Bảo Hành)</div>
+            </div>
+            <div class="pkg-price">2.242.500₫ <span style="font-size:12px; color:#8e8e93;">▼</span></div>
+        </div>
+    </div>
+
+    <!-- CHI TIẾT GÓI (Hiển thị khi chọn) -->
+    <div class="pkg-details" id="pkgDetailsBlock">
+        <div class="d-title">Chi tiết gói dịch vụ đang chọn</div>
+        <ul class="d-list">
+            <li>Dịch vụ hỗ trợ lên tích xanh Facebook bằng thông tin chính chủ.</li>
+            <li>Quy trình xác minh dựa trên giấy tờ và thông tin tài khoản thật.</li>
+            <li>Có bảo hành, phù hợp cho cá nhân cần xác minh tài khoản.</li>
+            <li>Không cần cung cấp CCCD.</li>
+            <li>Thời gian lên tick từ 15–60 days.</li>
+        </ul>
+    </div>
+
+    <!-- XÁC NHẬN & THANH TOÁN -->
+    <div class="terms-box">
+        <input type="checkbox" id="orderTermsAgree">
+        <label for="orderTermsAgree">TÔI XÁC NHẬN GÓI DỊCH VỤ VÀ CÁC ĐIỀU KHOẢN SỬ DỤNG.</label>
+    </div>
+
+    <div class="bill-summary">
+        <div class="bill-row" style="color: #fff; font-weight:bold; margin-bottom:10px; font-size: 15px;" id="billPkgName">Chưa chọn gói dịch vụ</div>
+        <div class="bill-row"><span class="b-label">Giá sản phẩm cần thanh toán</span><span class="b-val" id="billBasePrice">0₫</span></div>
+        <div class="bill-row"><span class="b-label">Thuế VAT (8%)</span><span class="b-val" id="billVatPrice">0₫</span></div>
+        <div class="bill-row total"><span class="total-label">Khách hàng phải trả</span><span class="total-val" id="billTotalPrice">0₫</span></div>
+    </div>
+
+    <button class="btn-submit-order" onclick="processOrder()">
+        <svg viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.16-.28L11.66 4h1.34l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
+        XÁC NHẬN THANH TOÁN ĐƠN
+    </button>
+
+    <!-- BẢNG LỊCH SỬ ĐƠN GẦN ĐÂY -->
+    <div class="recent-history-section">
+        <div class="hist-header">
+            <h3><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg> LỊCH SỬ ĐƠN GẦN ĐÂY</h3>
+            <button class="btn-refresh" onclick="loadOrderHistory()">↻ LÀM MỚI</button>
+        </div>
+        <div class="table-container">
+            <table class="custom-table">
+                <thead><tr><th>ID</th><th>Dịch Vụ</th><th>Dữ Liệu</th><th>Giá</th><th>Trạng Thái</th><th>Ngày Tạo</th></tr></thead>
+                <tbody id="orderHistoryBody">
+                    <!-- Dữ liệu JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let currentSelectedPkg = null;
+    let currentTotalToPay = 0;
+
+    // HÀM CHỌN GÓI VÀ TÍNH TOÁN TIỀN TỰ ĐỘNG
+    window.selectPackage = function(id, price, name) {
+        document.getElementById('pkg1').classList.remove('active');
+        document.getElementById('pkg2').classList.remove('active');
+        document.getElementById('pkg' + id).classList.add('active');
+        
+        document.getElementById('pkgDetailsBlock').classList.add('active');
+        
+        currentSelectedPkg = name;
+        
+        // Logic tính toán: Giá Base + 8% VAT
+        let vat = price * 0.08;
+        currentTotalToPay = price + vat;
+
+        document.getElementById('billPkgName').textContent = name;
+        document.getElementById('billBasePrice').textContent = price.toLocaleString('vi-VN') + '₫';
+        document.getElementById('billVatPrice').textContent = vat.toLocaleString('vi-VN') + '₫';
+        document.getElementById('billTotalPrice').textContent = currentTotalToPay.toLocaleString('vi-VN') + '₫';
+    };
+
+    // HÀM XỬ LÝ ĐẶT HÀNG (TRỪ TIỀN, LƯU LOGIC)
+    window.processOrder = function() {
+        if (!window.isLoggedIn) { window.showCustomModal("Lỗi", "Vui lòng Đăng nhập để sử dụng dịch vụ!", "alert"); return; }
+        
+        const accInfo = document.getElementById('orderAccInfo').value.trim();
+        const contactInfo = document.getElementById('orderContactInfo').value.trim();
+        const isAgreed = document.getElementById('orderTermsAgree').checked;
+
+        if(!accInfo || !contactInfo) { window.showCustomModal("Thiếu thông tin", "Vui lòng điền đầy đủ Thông tin tài khoản và Liên hệ!", "alert"); return; }
+        if(!currentSelectedPkg) { window.showCustomModal("Chưa chọn gói", "Vui lòng chọn 1 máy chủ dịch vụ ở phía trên!", "alert"); return; }
+        if(!isAgreed) { window.showCustomModal("Điều khoản", "Bạn cần tick vào ô Xác nhận điều khoản sử dụng!", "alert"); return; }
+
+        // KIỂM TRA SỐ DƯ
+        if(window.currentUser.balance < currentTotalToPay) {
+            window.showCustomModal("Số Dư Không Đủ", "Tài khoản của bạn không đủ tiền. Vui lòng nạp thêm!", "confirm", () => { window.navigateTo('pages/balance/deposit.html'); });
+            return;
+        }
+
+        // XỬ LÝ TRỪ TIỀN VÀ LƯU LỊCH SỬ
+        window.showCustomModal("Xác nhận", `Bạn chắc chắn muốn mua gói này với giá ${currentTotalToPay.toLocaleString('vi-VN')}₫ ?`, "confirm", () => {
+            
+            // Trừ tiền và Tăng tiêu dùng
+            window.currentUser.balance -= currentTotalToPay;
+            window.currentUser.totalSpent += currentTotalToPay;
+
+            // Ghi vào lịch sử hệ thống
+            const orderId = "TX" + Math.floor(10000 + Math.random() * 90000);
+            window.currentUser.history.unshift({
+                id: orderId,
+                type: 'service_tich_xanh',
+                title: currentSelectedPkg,
+                data: contactInfo.substring(0, 5) + '***', // Ẩn bớt data bảo mật
+                amount: currentTotalToPay,
+                time: new Date().toLocaleString('vi-VN'),
+                status: 'processing'
+            });
+
+            window.saveUserDB();
+            window.updateBalanceUI(); // Hàm toàn cục để cập nhật số dư góc dưới
+
+            window.showCustomModal("Thành Công", "Đơn hàng của bạn đã được hệ thống ghi nhận và đang xử lý!", "alert", () => {
+                loadOrderHistory(); // Tải lại bảng
+                document.getElementById('orderAccInfo').value = '';
+            });
+        });
+    };
+
+    // HÀM HIỂN THỊ BẢNG LỊCH SỬ
+    window.loadOrderHistory = function() {
+        const tbody = document.getElementById('orderHistoryBody');
+        if(!window.isLoggedIn || !window.currentUser.history || window.currentUser.history.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px; color:#8e8e93;">Chưa có đơn hàng nào</td></tr>`;
+            return;
+        }
+
+        // Lọc chỉ lấy các đơn của dịch vụ Tích xanh
+        const txOrders = window.currentUser.history.filter(h => h.type === 'service_tich_xanh');
+        if(txOrders.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px; color:#8e8e93;">Bạn chưa mua gói Tích Xanh nào</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = txOrders.map(o => `
+            <tr>
+                <td style="color:#0A84FF; font-weight:bold;">${o.id}</td>
+                <td><div style="font-weight:bold; color:#fff; font-size:13px; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${o.title}</div></td>
+                <td style="color:#8e8e93;">${o.data}</td>
+                <td style="color:#34C759; font-family:monospace; font-weight:bold;">${o.amount.toLocaleString('vi-VN')}₫</td>
+                <td><span class="status-badge st-processing">Đang chạy</span></td>
+                <td style="color:#8e8e93; font-size:12px;">${o.time}</td>
+            </tr>
+        `).join('');
+    };
+
+    // Khởi chạy khi mở trang
+    setTimeout(loadOrderHistory, 100);
+</script>

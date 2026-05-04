@@ -1,0 +1,322 @@
+<style>
+    .order-wrapper { animation: fadeIn 0.4s ease; padding-bottom: 40px; }
+    
+    /* HEADER KHU VỰC ĐẶT HÀNG */
+    .order-header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+    .back-btn { width: 45px; height: 45px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; cursor: pointer; color: #fff; transition: 0.2s; }
+    .back-btn:hover { background: rgba(10,132,255,0.2); border-color: #0A84FF; color: #0A84FF;}
+    .order-title-box { display: flex; align-items: center; gap: 12px; }
+    .cart-icon { width: 45px; height: 45px; background: rgba(255,215,0,0.15); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #FFD700; border: 1px solid rgba(255,215,0,0.3); }
+    .cart-icon svg { width: 22px; height: 22px; fill: currentColor; }
+    .o-title { color: #fff; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; margin-bottom: 2px;}
+    .o-subtitle { color: #8e8e93; font-size: 13px; font-weight: 600; font-style: italic;}
+
+    /* INPUT CHUYÊN NGHIỆP */
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    .input-group label { color: #8e8e93; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+    .custom-input { background: rgba(10, 10, 12, 0.6); border: 1px solid rgba(255,255,255,0.08); padding: 16px 20px; border-radius: 16px; color: #fff; font-size: 15px; outline: none; transition: 0.3s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);}
+    .custom-input:focus { border-color: #0A84FF; box-shadow: 0 0 15px rgba(10,132,255,0.2), inset 0 2px 5px rgba(0,0,0,0.5); }
+    .custom-input::placeholder { color: rgba(255,255,255,0.2); }
+
+    /* CHỌN GÓI DỊCH VỤ (ACCORDION STYLE) */
+    .section-label { color: #fff; font-size: 16px; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;}
+    .section-label svg { width: 20px; height: 20px; fill: #0A84FF; }
+    .pkg-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
+    
+    .pkg-wrapper { display: flex; flex-direction: column; }
+    .pkg-card { background: rgba(28,28,30,0.8); border: 1px solid rgba(255,255,255,0.05); padding: 18px 20px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; position: relative; z-index: 2;}
+    .pkg-card:hover { background: rgba(40,40,45,0.9); }
+    .pkg-wrapper.active .pkg-card { background: rgba(10,132,255,0.08); border-color: #0A84FF; box-shadow: 0 5px 15px rgba(10,132,255,0.15); border-radius: 18px 18px 0 0; border-bottom: none;}
+    
+    .pkg-left { display: flex; align-items: center; gap: 15px; }
+    .radio-circle { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #555; position: relative; transition: 0.2s;}
+    .pkg-wrapper.active .radio-circle { border-color: #0A84FF; }
+    .pkg-wrapper.active .radio-circle::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #0A84FF; border-radius: 50%; box-shadow: 0 0 8px #0A84FF;}
+    .pkg-name { color: #fff; font-weight: 700; font-size: 15px; }
+    
+    .pkg-right { display: flex; align-items: center; gap: 10px; }
+    .pkg-price { color: #34C759; font-weight: 900; font-size: 16px; font-family: 'Courier New', monospace; }
+    .pkg-wrapper.active .pkg-price { color: #0A84FF; }
+    .chevron-icon { color: #8e8e93; transition: 0.3s; font-size: 12px; }
+    .pkg-wrapper.active .chevron-icon { transform: rotate(180deg); color: #0A84FF; }
+
+    /* NỘI DUNG CHI TIẾT GÓI MỞ RỘNG */
+    .pkg-details { background: rgba(255,215,0,0.05); border: 1px solid #0A84FF; border-top: none; padding: 20px; border-radius: 0 0 18px 18px; display: none; animation: slideDown 0.3s ease-out; position: relative; z-index: 1;}
+    .pkg-wrapper.active .pkg-details { display: block; }
+    .d-text { color: #FFD700; font-size: 14px; line-height: 1.8; margin-bottom: 5px; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* BILL & XÁC NHẬN */
+    .terms-box { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; cursor: pointer; }
+    .terms-box input[type="checkbox"] { width: 18px; height: 18px; accent-color: #0A84FF; cursor: pointer;}
+    .terms-box label { color: #8e8e93; font-size: 13px; font-weight: 600; text-transform: uppercase; cursor: pointer;}
+
+    .bill-summary { background: linear-gradient(180deg, rgba(20,20,25,0.9), rgba(10,10,12,0.9)); border: 1px solid rgba(52,199,89,0.2); border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+    .bill-row { display: flex; justify-content: space-between; padding: 10px 0; color: #aaa; font-size: 14px; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+    .bill-row:last-child { border-bottom: none; }
+    .bill-row.total { margin-top: 10px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); align-items: center; }
+    .b-label { font-weight: 600; }
+    .b-val { font-family: monospace; font-weight: bold; color: #fff;}
+    .total-label { color: #34C759; font-weight: 900; font-size: 16px; text-transform: uppercase; }
+    .total-val { color: #34C759; font-size: 26px; font-weight: 900; text-shadow: 0 0 10px rgba(52,199,89,0.3); }
+
+    .btn-submit-order { width: 100%; background: linear-gradient(135deg, #0068FF, #00C6FF); color: #fff; border: none; padding: 18px; border-radius: 18px; font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(10,132,255,0.4); transition: 0.3s;}
+    .btn-submit-order:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(10,132,255,0.6); }
+    .btn-submit-order svg { width: 22px; height: 22px; fill: currentColor; }
+
+    /* BẢNG LỊCH SỬ GẦN ĐÂY */
+    .recent-history-section { margin-top: 50px; background: rgba(28,28,30,0.5); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
+    .hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .hist-header h3 { color: #fff; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;}
+    .hist-header h3 svg { width: 20px; height: 20px; fill: #8e8e93; }
+    .btn-refresh { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #8e8e93; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s;}
+    .btn-refresh:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .table-container { overflow-x: auto; }
+    .custom-table { width: 100%; min-width: 600px; border-collapse: collapse; }
+    .custom-table th { background: rgba(0,0,0,0.3); color: #8e8e93; padding: 12px 15px; text-align: left; font-size: 12px; text-transform: uppercase; }
+    .custom-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #fff; font-size: 14px; }
+    .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase;}
+    .st-processing { background: rgba(255, 159, 10, 0.15); color: #FF9F0A; border: 1px solid rgba(255, 159, 10, 0.3); }
+
+    @media (max-width: 600px) { .input-grid { grid-template-columns: 1fr; gap: 15px; } }
+</style>
+
+<div class="order-wrapper">
+    
+    <!-- HEADER -->
+    <div class="order-header">
+        <button class="back-btn" onclick="window.navigateTo('pages/services/facebook.html')">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+        </button>
+        <div class="order-title-box">
+            <div class="cart-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.08-.01-.15-.03-.24-.03-.31 0-.59.13-.79.33l-.79.8 4.94 4.94c.27.27.65.44 1.04.44h6.79c.75 0 1.33-.55 1.44-1.28l.75-5.27c.01-.07.02-.14.02-.2 0-.62-.38-1.16-.91-1.38z"/></svg>
+            </div>
+            <div>
+                <div class="o-title" style="color: #fff;">CHỌC BẠN BÈ FACEBOOK</div>
+                <div class="o-subtitle">Tất cả đơn hàng đều được xử lý tự động 24/7.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM THÔNG TIN -->
+    <div class="input-grid">
+        <div class="input-group">
+            <label>NHẬP COOKIE FACEBOOK</label>
+            <input type="text" id="orderPokeData" class="custom-input" placeholder="Cookie hoặc id|pass|2fa">
+        </div>
+        <div class="input-group">
+            <label>THÔNG TIN LIÊN HỆ</label>
+            <input type="text" id="orderContactInfoPoke" class="custom-input" placeholder="Sdt ( Zalo ) hoặc id ( Telegram )">
+        </div>
+    </div>
+
+    <!-- CHỌN GÓI DỊCH VỤ -->
+    <div class="section-label">CHỌN MÁY CHỦ DỊCH VỤ:</div>
+    <div class="pkg-container">
+        
+        <!-- GÓI 1 (99k + 15%) -->
+        <div class="pkg-wrapper" id="pokeWrap1">
+            <div class="pkg-card" onclick="selectPackagePoke(1, 113850, 'Chọc Bạn Bè FB Full List Friend')">
+                <div class="pkg-left">
+                    <div class="radio-circle"></div>
+                    <div class="pkg-name">Chọc Bạn Bè FB Full List Friend</div>
+                </div>
+                <div class="pkg-right">
+                    <div class="pkg-price">113.850₫</div>
+                    <div class="chevron-icon">▼</div>
+                </div>
+            </div>
+            <div class="pkg-details">
+                <div class="d-text">
+                    Chi tiết gói dịch vụ đang chọn<br>
+                    Dịch vụ tự động chọc toàn bộ bạn bè trong danh sách Facebook.<br><br>
+                    Giúp tăng tương tác và nhắc bạn bè quay lại profile.<br><br>
+                    Phù hợp cho tài khoản cần kích hoạt tương tác với full list friend.
+                </div>
+            </div>
+        </div>
+
+        <!-- GÓI 2 (390k + 15%) -->
+        <div class="pkg-wrapper" id="pokeWrap2">
+            <div class="pkg-card" onclick="selectPackagePoke(2, 448500, 'Chọc Bạn Bè Gói 1 Tháng')">
+                <div class="pkg-left">
+                    <div class="radio-circle"></div>
+                    <div class="pkg-name">Chọc Bạn Bè Gói 1 Tháng</div>
+                </div>
+                <div class="pkg-right">
+                    <div class="pkg-price">448.500₫</div>
+                    <div class="chevron-icon">▼</div>
+                </div>
+            </div>
+            <div class="pkg-details">
+                <div class="d-text">
+                    Chi tiết gói dịch vụ đang chọn<br>
+                    Dịch vụ tự động chọc bạn bè Facebook trong thời gian 1 tháng.<br><br>
+                    Hoạt động định kỳ giúp duy trì và tăng tương tác với bạn bè.<br><br>
+                    Phù hợp cho tài khoản bán hàng hoặc xây dựng profile hoạt động thường xuyên.
+                </div>
+            </div>
+        </div>
+
+        <!-- GÓI 3 (670k + 15%) -->
+        <div class="pkg-wrapper" id="pokeWrap3">
+            <div class="pkg-card" onclick="selectPackagePoke(3, 770500, 'Chọc Bạn Bè Gói 3 Tháng')">
+                <div class="pkg-left">
+                    <div class="radio-circle"></div>
+                    <div class="pkg-name">Chọc Bạn Bè Gói 3 Tháng</div>
+                </div>
+                <div class="pkg-right">
+                    <div class="pkg-price">770.500₫</div>
+                    <div class="chevron-icon">▼</div>
+                </div>
+            </div>
+            <div class="pkg-details">
+                <div class="d-text">
+                    Chi tiết gói dịch vụ đang chọn<br>
+                    Dịch vụ tự động chọc bạn bè Facebook trong thời gian 3 tháng.<br><br>
+                    Hoạt động định kỳ giúp duy trì và tăng tương tác với danh sách bạn bè.<br><br>
+                    Phù hợp cho tài khoản bán hàng hoặc xây dựng profile hoạt động lâu dài.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- XÁC NHẬN & THANH TOÁN -->
+    <div class="terms-box">
+        <input type="checkbox" id="orderTermsAgreePoke">
+        <label for="orderTermsAgreePoke">TÔI XÁC NHẬN GÓI DỊCH VỤ VÀ CÁC ĐIỀU KHOẢN SỬ DỤNG.</label>
+    </div>
+
+    <div class="bill-summary">
+        <div class="bill-row" style="color: #fff; font-weight:bold; margin-bottom:10px; font-size: 15px;" id="billPkgNamePoke">Chưa chọn gói dịch vụ</div>
+        <div class="bill-row"><span class="b-label">Giá sản phẩm cần thanh toán</span><span class="b-val" id="billBasePricePoke">0₫</span></div>
+        <div class="bill-row"><span class="b-label">Thuế VAT (8%)</span><span class="b-val" id="billVatPricePoke">0₫</span></div>
+        <div class="bill-row total"><span class="total-label">Khách hàng phải trả</span><span class="total-val" id="billTotalPricePoke">0₫</span></div>
+    </div>
+
+    <button class="btn-submit-order" onclick="processOrderPoke()">
+        <svg viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.16-.28L11.66 4h1.34l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
+        XÁC NHẬN THANH TOÁN ĐƠN
+    </button>
+
+    <!-- LỊCH SỬ ĐƠN HÀNG -->
+    <div class="recent-history-section">
+        <div class="hist-header">
+            <h3><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg> LỊCH SỬ ĐƠN GẦN ĐÂY</h3>
+            <button class="btn-refresh" onclick="loadOrderHistoryPoke()">↻ LÀM MỚI</button>
+        </div>
+        <div class="table-container">
+            <table class="custom-table">
+                <thead><tr><th>ID</th><th>Dịch Vụ</th><th>Dữ Liệu</th><th>Giá</th><th>Trạng Thái</th><th>Ngày Tạo</th></tr></thead>
+                <tbody id="orderHistoryBodyPoke">
+                    <!-- Javascript đổ data vào đây -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    (function initServicePoke() {
+        let currentSelectedPkgPoke = null;
+        let currentTotalToPayPoke = 0;
+
+        // 1. HÀM CHỌN GÓI
+        window.selectPackagePoke = function(id, price, name) {
+            for(let i = 1; i <= 3; i++) {
+                let el = document.getElementById('pokeWrap' + i);
+                if(el) el.classList.remove('active');
+            }
+            
+            document.getElementById('pokeWrap' + id).classList.add('active');
+            currentSelectedPkgPoke = name;
+            
+            // Tính thuế 8%
+            let vat = price * 0.08;
+            currentTotalToPayPoke = price + vat;
+
+            document.getElementById('billPkgNamePoke').textContent = name;
+            document.getElementById('billBasePricePoke').textContent = price.toLocaleString('vi-VN') + '₫';
+            document.getElementById('billVatPricePoke').textContent = vat.toLocaleString('vi-VN') + '₫';
+            document.getElementById('billTotalPricePoke').textContent = currentTotalToPayPoke.toLocaleString('vi-VN') + '₫';
+        };
+
+        // 2. XỬ LÝ THANH TOÁN VÀ LƯU DATABASE
+        window.processOrderPoke = function() {
+            if (!window.isLoggedIn) { window.showCustomModal("Lỗi", "Vui lòng Đăng nhập để sử dụng dịch vụ!", "alert"); return; }
+            
+            const dataInfo = document.getElementById('orderPokeData').value.trim();
+            const contactInfo = document.getElementById('orderContactInfoPoke').value.trim();
+            const isAgreed = document.getElementById('orderTermsAgreePoke').checked;
+
+            if(!dataInfo || !contactInfo) { window.showCustomModal("Thiếu thông tin", "Vui lòng nhập Cookie Facebook và Thông tin liên hệ!", "alert"); return; }
+            if(!currentSelectedPkgPoke) { window.showCustomModal("Chưa chọn gói", "Vui lòng click chọn 1 Máy chủ dịch vụ phía trên!", "alert"); return; }
+            if(!isAgreed) { window.showCustomModal("Điều khoản", "Bạn cần tick vào ô Xác nhận điều khoản sử dụng!", "alert"); return; }
+
+            // CHECK SỐ DƯ
+            if(window.currentUser.balance < currentTotalToPayPoke) {
+                window.showCustomModal("Số Dư Không Đủ", "Tài khoản của bạn không đủ tiền. Vui lòng nạp thêm!", "confirm", () => { window.navigateTo('pages/balance/deposit.html'); });
+                return;
+            }
+
+            // TRỪ TIỀN VÀ GHI VÀO DB
+            window.showCustomModal("Xác nhận", `Mua gói "${currentSelectedPkgPoke}" với giá ${currentTotalToPayPoke.toLocaleString('vi-VN')}₫ ?`, "confirm", () => {
+                
+                window.currentUser.balance -= currentTotalToPayPoke;
+                window.currentUser.totalSpent += currentTotalToPayPoke;
+
+                const orderId = "CB" + Math.floor(10000 + Math.random() * 90000);
+                window.currentUser.history.unshift({
+                    id: orderId,
+                    type: 'service_choc_ban_be',
+                    title: currentSelectedPkgPoke,
+                    data: dataInfo.substring(0, 10) + '...', // Rút gọn Cookie bảo mật
+                    amount: currentTotalToPayPoke,
+                    time: new Date().toLocaleString('vi-VN'),
+                    status: 'processing'
+                });
+
+                window.saveUserDB();
+                window.updateBalanceUI(); 
+
+                window.showCustomModal("Thành Công", "Hệ thống đã nhận lệnh Chọc Bạn Bè. Quá trình tương tác sẽ được tự động bắt đầu!", "alert", () => {
+                    loadOrderHistoryPoke();
+                    document.getElementById('orderPokeData').value = '';
+                });
+            });
+        };
+
+        // 3. HIỂN THỊ LỊCH SỬ ĐƠN
+        window.loadOrderHistoryPoke = function() {
+            const tbody = document.getElementById('orderHistoryBodyPoke');
+            if(!window.isLoggedIn || !window.currentUser.history || window.currentUser.history.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px; color:#8e8e93;">Chưa có đơn hàng nào</td></tr>`;
+                return;
+            }
+
+            // Lọc các đơn Chọc bạn bè
+            const pokeOrders = window.currentUser.history.filter(h => h.type === 'service_choc_ban_be');
+            if(pokeOrders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px; color:#8e8e93;">Bạn chưa mua gói Chọc Bạn Bè nào</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = pokeOrders.map(o => `
+                <tr>
+                    <td style="color:#0A84FF; font-weight:bold;">${o.id}</td>
+                    <td><div style="font-weight:bold; color:#fff; font-size:13px; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${o.title}</div></td>
+                    <td style="color:#8e8e93;">${o.data}</td>
+                    <td style="color:#34C759; font-family:monospace; font-weight:bold;">${o.amount.toLocaleString('vi-VN')}₫</td>
+                    <td><span class="status-badge st-processing">Đang chạy</span></td>
+                    <td style="color:#8e8e93; font-size:12px;">${o.time}</td>
+                </tr>
+            `).join('');
+        };
+
+        setTimeout(loadOrderHistoryPoke, 100);
+    })();
+</script>

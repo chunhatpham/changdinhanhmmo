@@ -1,0 +1,395 @@
+<style>
+    .order-wrapper { animation: fadeIn 0.4s ease; padding-bottom: 40px; }
+    
+    /* HEADER KHU VỰC ĐẶT HÀNG - TONE GOLD */
+    .order-header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+    .back-btn { width: 45px; height: 45px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; cursor: pointer; color: #fff; transition: 0.2s; }
+    .back-btn:hover { background: rgba(255, 215, 0, 0.2); border-color: #FFD700; color: #FFD700;}
+    .order-title-box { display: flex; align-items: center; gap: 12px; }
+    .cart-icon { width: 45px; height: 45px; background: rgba(255, 215, 0, 0.15); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #FFD700; border: 1px solid rgba(255, 215, 0, 0.3); }
+    .cart-icon svg { width: 22px; height: 22px; fill: currentColor; }
+    .o-title { color: #fff; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; margin-bottom: 2px;}
+    .o-subtitle { color: #8e8e93; font-size: 13px; font-weight: 600; font-style: italic;}
+
+    /* GRID 13 CHỨC NĂNG BUFF */
+    .cat-section { margin-bottom: 30px; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+    .cat-card { background: rgba(28,28,30,0.7); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 12px 15px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.2s; }
+    .cat-card:hover { background: rgba(40,40,45,0.9); border-color: rgba(255,215,0,0.3); }
+    .cat-card.active { background: rgba(255,215,0,0.1); border-color: #FFD700; box-shadow: 0 5px 15px rgba(255,215,0,0.15); }
+    .cat-icon { width: 30px; height: 30px; border-radius: 8px; background: rgba(255,255,255,0.05); display: flex; justify-content: center; align-items: center; color: #8e8e93; transition: 0.2s; }
+    .cat-card.active .cat-icon { background: #FFD700; color: #000; box-shadow: 0 0 10px rgba(255,215,0,0.5); }
+    .cat-icon svg { width: 16px; height: 16px; fill: currentColor; }
+    .cat-name { color: #fff; font-size: 13px; font-weight: 600; }
+    .cat-card.active .cat-name { color: #FFD700; }
+
+    /* VÙNG NHẬP LIỆU (ẨN LÚC ĐẦU) */
+    #actionSection { display: none; animation: slideDown 0.4s ease; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section-label { color: #fff; font-size: 16px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+    .section-label svg { width: 20px; height: 20px; fill: #FFD700; }
+    
+    .input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 25px;}
+    .input-group label { color: #8e8e93; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+    .custom-input { background: rgba(10, 10, 12, 0.6); border: 1px solid rgba(255,255,255,0.08); padding: 16px 20px; border-radius: 16px; color: #fff; font-size: 15px; outline: none; transition: 0.3s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); width: 100%;}
+    .custom-input:focus { border-color: #FFD700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.2), inset 0 2px 5px rgba(0,0,0,0.5); }
+    .custom-input:disabled { background: rgba(28,28,30,0.5); color: #8e8e93; cursor: not-allowed; }
+    .hint-text { color: #FF453A; font-size: 12px; margin-top: -15px; margin-bottom: 20px; font-style: italic;}
+
+    /* DANH SÁCH SERVER */
+    .server-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+    .server-card { background: rgba(28,28,30,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 15px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: 0.2s;}
+    .server-card:hover:not(.maint) { border-color: rgba(255,215,0,0.3); background: rgba(40,40,45,0.8); }
+    .server-card.active { background: rgba(255,215,0,0.1); border-color: #FFD700; }
+    .server-card.maint { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+    
+    .sv-head { display: flex; align-items: center; justify-content: space-between; }
+    .sv-title { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 14px; font-weight: bold; }
+    .radio-circle { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #555; position: relative; transition: 0.2s;}
+    .server-card.active .radio-circle { border-color: #FFD700; }
+    .server-card.active .radio-circle::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background: #FFD700; border-radius: 50%; box-shadow: 0 0 5px #FFD700;}
+    
+    .sv-badges { display: flex; gap: 8px; align-items: center; }
+    .badge-price { background: rgba(255, 55, 95, 0.2); color: #FF375F; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: bold; border: 1px solid rgba(255,55,95,0.3);}
+    .badge-status { font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+    .badge-status.active-st { background: rgba(52, 199, 89, 0.15); color: #34C759; border: 1px solid rgba(52, 199, 89, 0.3); }
+    .badge-status.maint-st { background: rgba(142, 142, 147, 0.15); color: #8e8e93; border: 1px solid rgba(142, 142, 147, 0.3); }
+    
+    .sv-desc { color: #8e8e93; font-size: 12px; line-height: 1.4; padding-left: 28px; }
+
+    /* BILL & XÁC NHẬN */
+    .bill-summary { background: linear-gradient(180deg, rgba(255,215,0,0.1), rgba(10,10,12,0.9)); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center; }
+    .bill-title { color: #FFD700; font-size: 20px; font-weight: 900; margin-bottom: 5px; text-transform: uppercase;}
+    .bill-desc { color: #fff; font-size: 14px; }
+    .bill-desc strong { color: #34C759; font-family: monospace; font-size: 16px;}
+
+    /* BẢN VÁ LỖI NÚT BẤM TO KHỔNG LỒ */
+    .btn-submit-order { 
+        width: 100%; 
+        max-width: 500px;
+        margin: 0 auto;
+        background: linear-gradient(135deg, #FFD700, #F5AF19); 
+        color: #000; 
+        border: none; 
+        padding: 16px 20px; 
+        border-radius: 18px; 
+        font-size: 16px; 
+        font-weight: 900; 
+        text-transform: uppercase; 
+        letter-spacing: 1px; 
+        cursor: pointer; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px; 
+        box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3); 
+        transition: 0.3s;
+    }
+    .btn-submit-order:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 215, 0, 0.5); }
+    .btn-submit-order svg { 
+        width: 24px !important; 
+        height: 24px !important; 
+        min-width: 24px !important;
+        min-height: 24px !important;
+        fill: currentColor; 
+        flex-shrink: 0; /* Ép cứng không cho svg tự phình to */
+    }
+
+    /* BẢNG LỊCH SỬ GẦN ĐÂY */
+    .recent-history-section { margin-top: 50px; background: rgba(28,28,30,0.5); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
+    .hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .hist-header h3 { color: #fff; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;}
+    .hist-header h3 svg { width: 20px; height: 20px; fill: #8e8e93; }
+    .btn-refresh { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #8e8e93; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s;}
+    .btn-refresh:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .table-container { overflow-x: auto; }
+    .custom-table { width: 100%; min-width: 800px; border-collapse: collapse; }
+    .custom-table th { background: rgba(0,0,0,0.3); color: #8e8e93; padding: 12px 15px; text-align: left; font-size: 12px; text-transform: uppercase; }
+    .custom-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #fff; font-size: 14px; }
+    .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase;}
+    .st-processing { background: rgba(52, 199, 89, 0.15); color: #34C759; border: 1px solid rgba(52, 199, 89, 0.3); }
+
+    .svg-icon { width: 100%; height: 100%; }
+</style>
+
+<div class="order-wrapper">
+    
+    <!-- HEADER -->
+    <div class="order-header">
+        <button class="back-btn" onclick="window.navigateTo('pages/services/facebook.html')">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+        </button>
+        <div class="order-title-box">
+            <div class="cart-icon">
+                <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+            </div>
+            <div>
+                <div class="o-title" style="color: #fff;">HỆ THỐNG BUFF FACEBOOK</div>
+                <div class="o-subtitle">Tăng tương tác tự động siêu tốc 24/7.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BƯỚC 1: CHỌN LOẠI TƯƠNG TÁC -->
+    <div class="cat-section">
+        <div class="section-label">1. CHỌN LOẠI TƯƠNG TÁC:</div>
+        <div class="cat-grid" id="buffCategoryGrid">
+            <!-- Render từ JS -->
+        </div>
+    </div>
+
+    <!-- BƯỚC 2: NHẬP LINK & CHỌN SERVER (ẨN ĐẾN KHI CHỌN CAT) -->
+    <div id="actionSection">
+        
+        <div class="input-group">
+            <label id="lblLinkInput">NHẬP LINK CẦN TĂNG:</label>
+            <input type="text" id="orderBuffLink" class="custom-input" placeholder="Vui lòng nhập Link Facebook cá nhân hoặc Bài viết...">
+        </div>
+        <div class="hint-text">
+            - Hỗ trợ tăng tương tác cho cả nick Facebook cá nhân và Fanpage Facebook.<br>
+            - Vui lòng bật công khai (Public) đối với bài viết/profile trước khi buff.<br>
+            - Không mua cùng lúc nhiều đơn cho 1 link, chờ đơn cũ chạy xong mới mua tiếp.
+        </div>
+
+        <div class="section-label">2. CHỌN MÁY CHỦ (SERVER):</div>
+        <div class="server-list" id="buffServerList">
+            <!-- Render từ JS -->
+        </div>
+
+        <div class="input-group">
+            <label>SỐ LƯỢNG CẦN TĂNG (TỐI THIỂU: 500 - TỐI ĐA: 50,000):</label>
+            <input type="number" id="orderBuffQty" class="custom-input" placeholder="500" value="500" min="500" max="50000" oninput="calculateBuffTotal()">
+        </div>
+
+        <div class="input-group">
+            <label>GIÁ TIỀN MỖI TƯƠNG TÁC:</label>
+            <input type="text" id="orderBuffPricePer" class="custom-input" value="0đ" disabled>
+        </div>
+
+        <div class="input-group">
+            <label>GHI CHÚ (KHÔNG BẮT BUỘC):</label>
+            <input type="text" id="orderBuffNote" class="custom-input" placeholder="Ghi chú về đơn hàng của bạn...">
+        </div>
+
+        <!-- HÓA ĐƠN TÍNH TỔNG (BAO GỒM 8% VAT) -->
+        <div class="bill-summary">
+            <div class="bill-title" id="txtTotalMoney">Tổng cộng: 0₫</div>
+            <div class="bill-desc" id="txtBillDesc">Vui lòng chọn máy chủ để xem tính toán</div>
+        </div>
+
+        <button class="btn-submit-order" onclick="processOrderBuff()">
+            <!-- SVG đã được khóa cứng size -->
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            <span>TẠO ĐƠN BUFF</span>
+        </button>
+
+    </div>
+
+    <!-- LỊCH SỬ ĐƠN HÀNG BUFF -->
+    <div class="recent-history-section">
+        <div class="hist-header">
+            <h3><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg> LỊCH SỬ ĐƠN BUFF GẦN ĐÂY</h3>
+            <button class="btn-refresh" onclick="loadOrderHistoryBuff()">↻ LÀM MỚI</button>
+        </div>
+        <div class="table-container">
+            <table class="custom-table">
+                <thead><tr><th>Mã Đơn</th><th>Dịch Vụ & Server</th><th>Link Cần Tăng</th><th>Số Lượng</th><th>Tổng Tiền</th><th>Trạng Thái</th><th>Ngày Tạo</th></tr></thead>
+                <tbody id="orderHistoryBodyBuff">
+                    <!-- Javascript đổ data vào đây -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    (function initServiceBuff() {
+        // DANH SÁCH 13 LOẠI TƯƠNG TÁC
+        const categories = [
+            { id: 'like_post', name: 'Tăng like bài viết', icon: '<path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>' },
+            { id: 'sub_follow', name: 'Tăng sub/follow', icon: '<path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18zm4.31-.05a6.45 6.45 0 0 1 6.45 6.45h-2.15a4.29 4.29 0 0 0-4.3-4.3v-2.15zm4.3-.06a10.74 10.74 0 0 1 10.74 10.74h-2.15a8.59 8.59 0 0 0-8.59-8.59v-2.15z"/>' },
+            { id: 'like_page', name: 'Tăng like/follow page', icon: '<path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/>' },
+            { id: 'comment', name: 'Tăng comment', icon: '<path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/>' },
+            { id: 'like_comment', name: 'Tăng like comment', icon: '<path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>' },
+            { id: 'share_post', name: 'Tăng share bài viết', icon: '<path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>' },
+            { id: 'share_live', name: 'Tăng share livestream', icon: '<path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>' },
+            { id: 'rate_page', name: 'Đánh giá fanpage', icon: '<path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>' },
+            { id: 'eye_live', name: 'Tăng mắt livestream', icon: '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>' },
+            { id: 'mem_group', name: 'Tăng member group', icon: '<path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>' },
+            { id: 'view_video', name: 'Tăng view video', icon: '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>' },
+            { id: 'view_story', name: 'Tăng view story', icon: '<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>' },
+            { id: 'vip_like', name: 'Vip like bài viết', icon: '<path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>' }
+        ];
+
+        // DANH SÁCH MÁY CHỦ DEMO CHUNG (GIÁ GỐC)
+        const baseServers = [
+            { id: '1297', basePrice: 50, speed: 'nhanh, tên Việt', status: 'active' },
+            { id: '1218', basePrice: 40, speed: 'chậm, giá rẻ', status: 'active' },
+            { id: '1267', basePrice: 60, speed: 'cực nhanh, quốc tế', status: 'active' },
+            { id: '1242', basePrice: 55, speed: 'ổn định, quốc tế', status: 'active' },
+            { id: '958',  basePrice: 60, speed: 'chậm, tên Việt', status: 'maint' },
+            { id: '964',  basePrice: 120, speed: 'siêu cấp, bảo hành', status: 'maint' }
+        ];
+
+        let state = { categoryName: '', serverId: null, serverPrice: 0, qty: 500 };
+
+        // RENDER DANH MỤC LÚC ĐẦU
+        const grid = document.getElementById('buffCategoryGrid');
+        grid.innerHTML = categories.map(c => `
+            <div class="cat-card" id="cat_${c.id}" onclick="selectBuffCategory('${c.id}', '${c.name}')">
+                <div class="cat-icon"><svg viewBox="0 0 24 24" class="svg-icon">${c.icon}</svg></div>
+                <div class="cat-name">${c.name}</div>
+            </div>
+        `).join('');
+
+        // CHỌN DANH MỤC
+        window.selectBuffCategory = function(id, name) {
+            // Đổi active
+            document.querySelectorAll('.cat-card').forEach(el => el.classList.remove('active'));
+            document.getElementById('cat_' + id).classList.add('active');
+            
+            state.categoryName = name;
+            state.serverId = null; // reset server
+            document.getElementById('actionSection').style.display = 'block';
+            document.getElementById('lblLinkInput').textContent = `NHẬP LINK CẦN TĂNG "${name.toUpperCase()}":`;
+
+            renderServers();
+            calculateBuffTotal();
+        };
+
+        // RENDER MÁY CHỦ (+15% GIÁ)
+        function renderServers() {
+            const list = document.getElementById('buffServerList');
+            list.innerHTML = baseServers.map(sv => {
+                // Tăng giá 15%
+                let finalPrice = Math.round(sv.basePrice * 1.15);
+                let isMaint = sv.status === 'maint';
+                
+                return `
+                <div class="server-card ${isMaint ? 'maint' : ''}" id="svCard_${sv.id}" ${!isMaint ? `onclick="selectBuffServer('${sv.id}', ${finalPrice})"` : ''}>
+                    <div class="sv-head">
+                        <div class="sv-title">
+                            <div class="radio-circle" id="svRadio_${sv.id}"></div>
+                            Server ${sv.id}
+                        </div>
+                        <div class="sv-badges">
+                            <span class="badge-price">${finalPrice}₫ / Lượt</span>
+                            <span class="badge-status ${isMaint ? 'maint-st' : 'active-st'}">${isMaint ? 'Bảo trì' : 'Hoạt động'}</span>
+                        </div>
+                    </div>
+                    <div class="sv-desc">${state.categoryName} từ tài khoản người dùng thật, tốc độ ${sv.speed}.</div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // CHỌN MÁY CHỦ
+        window.selectBuffServer = function(id, price) {
+            document.querySelectorAll('.server-card').forEach(el => el.classList.remove('active'));
+            document.getElementById('svCard_' + id).classList.add('active');
+            
+            state.serverId = id;
+            state.serverPrice = price;
+            
+            document.getElementById('orderBuffPricePer').value = price + '₫';
+            calculateBuffTotal();
+        };
+
+        // TÍNH TOÁN TIỀN (Số lượng * Giá Server + 8% VAT)
+        window.calculateBuffTotal = function() {
+            let inputQty = parseInt(document.getElementById('orderBuffQty').value) || 0;
+            state.qty = inputQty;
+
+            if(!state.serverId) {
+                document.getElementById('txtTotalMoney').textContent = "Tổng cộng: 0₫";
+                document.getElementById('txtBillDesc').textContent = "Vui lòng chọn máy chủ để xem tính toán";
+                return;
+            }
+
+            let baseTotal = state.qty * state.serverPrice;
+            let finalTotal = baseTotal + (baseTotal * 0.08); // + 8% VAT
+
+            document.getElementById('txtTotalMoney').textContent = `Tổng cộng: ${finalTotal.toLocaleString('vi-VN')}₫`;
+            document.getElementById('txtBillDesc').innerHTML = `Bạn sẽ buff <strong>${state.qty.toLocaleString('vi-VN')} ${state.categoryName.replace('Tăng ', '')}</strong> với giá <strong>${state.serverPrice}₫ / lượt</strong> (Đã bao gồm 8% VAT)`;
+        };
+
+        // GỬI ĐƠN HÀNG
+        window.processOrderBuff = function() {
+            if (!window.isLoggedIn) { window.showCustomModal("Lỗi", "Vui lòng Đăng nhập để sử dụng dịch vụ!", "alert"); return; }
+            
+            const linkData = document.getElementById('orderBuffLink').value.trim();
+            
+            if(!state.categoryName) { window.showCustomModal("Thiếu thông tin", "Vui lòng chọn 1 Loại Tương Tác ở Bước 1!", "alert"); return; }
+            if(!linkData) { window.showCustomModal("Thiếu thông tin", "Vui lòng nhập Link Facebook cần buff!", "alert"); return; }
+            if(!state.serverId) { window.showCustomModal("Chưa chọn Server", "Vui lòng chọn 1 Máy chủ (Server) đang hoạt động!", "alert"); return; }
+            if(state.qty < 500 || state.qty > 50000) { window.showCustomModal("Lỗi Số Lượng", "Số lượng buff tối thiểu là 500 và tối đa là 50,000!", "alert"); return; }
+
+            let baseTotal = state.qty * state.serverPrice;
+            let finalTotal = baseTotal + (baseTotal * 0.08);
+
+            // CHECK SỐ DƯ
+            if(window.currentUser.balance < finalTotal) {
+                window.showCustomModal("Số Dư Không Đủ", "Tài khoản của bạn không đủ tiền. Vui lòng nạp thêm!", "confirm", () => { window.navigateTo('pages/balance/deposit.html'); });
+                return;
+            }
+
+            // TRỪ TIỀN & LƯU LỊCH SỬ
+            window.showCustomModal("Tạo Đơn Buff", `Xác nhận Buff ${state.qty} ${state.categoryName.replace('Tăng ', '')} tại Server ${state.serverId} với tổng chi phí ${finalTotal.toLocaleString('vi-VN')}₫ ?`, "confirm", () => {
+                
+                window.currentUser.balance -= finalTotal;
+                window.currentUser.totalSpent += finalTotal;
+
+                const orderId = "BF" + Math.floor(10000 + Math.random() * 90000); // BF = Buff
+                window.currentUser.history.unshift({
+                    id: orderId,
+                    type: 'service_buff_fb',
+                    title: `[SV ${state.serverId}] ${state.categoryName}`,
+                    data: linkData.substring(0, 20) + '...', // Rút gọn link hiển thị
+                    qty: state.qty,
+                    amount: finalTotal,
+                    time: new Date().toLocaleString('vi-VN'),
+                    status: 'processing'
+                });
+
+                window.saveUserDB();
+                window.updateBalanceUI(); 
+
+                window.showCustomModal("Thành Công", "Đơn hàng Buff của bạn đã được đẩy lên hệ thống. Tương tác sẽ bắt đầu tăng trong vài phút tới!", "alert", () => {
+                    loadOrderHistoryBuff();
+                    document.getElementById('orderBuffLink').value = '';
+                });
+            });
+        };
+
+        // HIỂN THỊ BẢNG LỊCH SỬ
+        window.loadOrderHistoryBuff = function() {
+            const tbody = document.getElementById('orderHistoryBodyBuff');
+            if(!window.isLoggedIn || !window.currentUser.history || window.currentUser.history.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:#8e8e93;">Chưa có đơn hàng nào</td></tr>`;
+                return;
+            }
+
+            const bfOrders = window.currentUser.history.filter(h => h.type === 'service_buff_fb');
+            if(bfOrders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:#8e8e93;">Bạn chưa có đơn Buff Facebook nào</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = bfOrders.map(o => `
+                <tr>
+                    <td style="color:#0A84FF; font-weight:bold;">${o.id}</td>
+                    <td><div style="font-weight:bold; color:#FFD700; font-size:13px;">${o.title}</div></td>
+                    <td><div style="color:#8e8e93; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${o.data}</div></td>
+                    <td style="color:#fff; font-weight:bold;">${o.qty.toLocaleString('vi-VN')}</td>
+                    <td style="color:#34C759; font-family:monospace; font-weight:bold;">${o.amount.toLocaleString('vi-VN')}₫</td>
+                    <td><span class="status-badge st-processing">Đang chạy</span></td>
+                    <td style="color:#8e8e93; font-size:12px;">${o.time}</td>
+                </tr>
+            `).join('');
+        };
+
+        setTimeout(loadOrderHistoryBuff, 100);
+    })();
+</script>

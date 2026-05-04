@@ -1,0 +1,290 @@
+<style>
+    .order-wrapper { animation: fadeIn 0.4s ease; padding-bottom: 40px; }
+    
+    /* HEADER KHU VỰC ĐẶT HÀNG - TONE MÀU XANH LÁ CÂY */
+    .order-header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+    .back-btn { width: 45px; height: 45px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; cursor: pointer; color: #fff; transition: 0.2s; }
+    .back-btn:hover { background: rgba(52, 199, 89, 0.2); border-color: #34C759; color: #34C759;}
+    .order-title-box { display: flex; align-items: center; gap: 12px; }
+    .cart-icon { width: 45px; height: 45px; background: rgba(52, 199, 89, 0.15); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #34C759; border: 1px solid rgba(52, 199, 89, 0.3); }
+    .cart-icon svg { width: 22px; height: 22px; fill: currentColor; }
+    .o-title { color: #fff; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; margin-bottom: 2px;}
+    .o-subtitle { color: #8e8e93; font-size: 13px; font-weight: 600; font-style: italic;}
+
+    /* INPUT CHUYÊN NGHIỆP */
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    .input-group label { color: #8e8e93; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+    .custom-input { background: rgba(10, 10, 12, 0.6); border: 1px solid rgba(255,255,255,0.08); padding: 16px 20px; border-radius: 16px; color: #fff; font-size: 15px; outline: none; transition: 0.3s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);}
+    .custom-input:focus { border-color: #34C759; box-shadow: 0 0 15px rgba(52, 199, 89, 0.2), inset 0 2px 5px rgba(0,0,0,0.5); }
+    .custom-input::placeholder { color: rgba(255,255,255,0.2); }
+
+    /* CHỌN GÓI DỊCH VỤ (ACCORDION STYLE) */
+    .section-label { color: #fff; font-size: 16px; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;}
+    .section-label svg { width: 20px; height: 20px; fill: #34C759; }
+    .pkg-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
+    
+    .pkg-wrapper { display: flex; flex-direction: column; }
+    .pkg-card { background: rgba(28,28,30,0.8); border: 1px solid rgba(255,255,255,0.05); padding: 18px 20px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; position: relative; z-index: 2;}
+    .pkg-card:hover { background: rgba(40,40,45,0.9); }
+    .pkg-wrapper.active .pkg-card { background: rgba(52, 199, 89, 0.08); border-color: #34C759; box-shadow: 0 5px 15px rgba(52, 199, 89, 0.15); border-radius: 18px 18px 0 0; border-bottom: none;}
+    
+    .pkg-left { display: flex; align-items: center; gap: 15px; }
+    .radio-circle { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #555; position: relative; transition: 0.2s;}
+    .pkg-wrapper.active .radio-circle { border-color: #34C759; }
+    .pkg-wrapper.active .radio-circle::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #34C759; border-radius: 50%; box-shadow: 0 0 8px #34C759;}
+    .pkg-name { color: #fff; font-weight: 700; font-size: 15px; }
+    
+    .pkg-right { display: flex; align-items: center; gap: 10px; }
+    .pkg-price { color: #34C759; font-weight: 900; font-size: 16px; font-family: 'Courier New', monospace; }
+    .chevron-icon { color: #8e8e93; transition: 0.3s; font-size: 12px; }
+    .pkg-wrapper.active .chevron-icon { transform: rotate(180deg); color: #34C759; }
+
+    /* NỘI DUNG CHI TIẾT GÓI MỞ RỘNG */
+    .pkg-details { background: rgba(52, 199, 89, 0.05); border: 1px solid #34C759; border-top: none; padding: 20px; border-radius: 0 0 18px 18px; display: none; animation: slideDown 0.3s ease-out; position: relative; z-index: 1;}
+    .pkg-wrapper.active .pkg-details { display: block; }
+    .d-text { color: #FFD700; font-size: 14px; line-height: 1.8; margin-bottom: 5px; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* BILL & XÁC NHẬN */
+    .terms-box { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; cursor: pointer; }
+    .terms-box input[type="checkbox"] { width: 18px; height: 18px; accent-color: #34C759; cursor: pointer;}
+    .terms-box label { color: #8e8e93; font-size: 13px; font-weight: 600; text-transform: uppercase; cursor: pointer;}
+
+    .bill-summary { background: linear-gradient(180deg, rgba(20,20,25,0.9), rgba(10,10,12,0.9)); border: 1px solid rgba(52,199,89,0.2); border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+    .bill-row { display: flex; justify-content: space-between; padding: 10px 0; color: #aaa; font-size: 14px; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+    .bill-row:last-child { border-bottom: none; }
+    .bill-row.total { margin-top: 10px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); align-items: center; }
+    .b-label { font-weight: 600; }
+    .b-val { font-family: monospace; font-weight: bold; color: #fff;}
+    .total-label { color: #34C759; font-weight: 900; font-size: 16px; text-transform: uppercase; }
+    .total-val { color: #34C759; font-size: 26px; font-weight: 900; text-shadow: 0 0 10px rgba(52,199,89,0.3); }
+
+    /* NÚT SUBMIT THEME XANH LÁ */
+    .btn-submit-order { width: 100%; background: linear-gradient(135deg, #30D158, #34C759); color: #fff; border: none; padding: 18px; border-radius: 18px; font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(52, 199, 89, 0.4); transition: 0.3s;}
+    .btn-submit-order:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(52, 199, 89, 0.6); }
+    .btn-submit-order svg { width: 22px; height: 22px; fill: currentColor; }
+
+    /* BẢNG LỊCH SỬ GẦN ĐÂY */
+    .recent-history-section { margin-top: 50px; background: rgba(28,28,30,0.5); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
+    .hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .hist-header h3 { color: #fff; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;}
+    .hist-header h3 svg { width: 20px; height: 20px; fill: #8e8e93; }
+    .btn-refresh { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #8e8e93; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s;}
+    .btn-refresh:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .table-container { overflow-x: auto; }
+    .custom-table { width: 100%; min-width: 700px; border-collapse: collapse; }
+    .custom-table th { background: rgba(0,0,0,0.3); color: #8e8e93; padding: 12px 15px; text-align: left; font-size: 12px; text-transform: uppercase; }
+    .custom-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #fff; font-size: 14px; }
+    .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase;}
+    .st-processing { background: rgba(255, 159, 10, 0.15); color: #FF9F0A; border: 1px solid rgba(255, 159, 10, 0.3); }
+
+    @media (max-width: 600px) { .input-grid { grid-template-columns: 1fr; gap: 15px; } }
+</style>
+
+<div class="order-wrapper">
+    
+    <!-- HEADER -->
+    <div class="order-header">
+        <button class="back-btn" onclick="window.navigateTo('pages/services/facebook.html')">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+        </button>
+        <div class="order-title-box">
+            <div class="cart-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            </div>
+            <div>
+                <div class="o-title" style="color: #fff;">LẤY LẠI FACEBOOK BỊ HACK</div>
+                <div class="o-subtitle">Tất cả đơn hàng đều được xử lý tự động 24/7.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM THÔNG TIN LẤY HACK -->
+    <div class="input-grid">
+        <div class="input-group">
+            <label>THÔNG TIN LIÊN HỆ</label>
+            <input type="text" id="orderContactInfoHack" class="custom-input" placeholder="Sdt ( Zalo hoặc id ( Telegram ) để bot auto gửi">
+        </div>
+        <div class="input-group">
+            <label>TÀI KHOẢN FB ĐÓ ĐÃ ĐĂNG NHẬP TRÊN MÁY BẠN BAO LÂU RỒI ?</label>
+            <input type="text" id="orderDeviceTimeHack" class="custom-input" placeholder="6 Tháng | 1 Năm | 3 Năm| ...">
+        </div>
+    </div>
+
+    <!-- CHỌN MÁY CHỦ (2 GÓI ĐÃ CỘNG 15%) -->
+    <div class="section-label">CHỌN MÁY CHỦ DỊCH VỤ:</div>
+    <div class="pkg-container">
+        
+        <!-- GÓI 1 (450k + 15% = 517,500) -->
+        <div class="pkg-wrapper" id="hackWrap1">
+            <div class="pkg-card" onclick="selectPackageHack(1, 517500, 'Lấy Lại Facebook Bị Hack')">
+                <div class="pkg-left"><div class="radio-circle"></div><div class="pkg-name">Lấy Lại Facebook Bị Hack</div></div>
+                <div class="pkg-right"><div class="pkg-price">517.500₫</div><div class="chevron-icon">▼</div></div>
+            </div>
+            <div class="pkg-details">
+                <div class="d-text">
+                    Chi tiết gói dịch vụ đang chọn<br>
+                    Dịch vụ khôi phục tài khoản Facebook bị hack hoặc bị chiếm quyền.<br><br>
+                    Yêu cầu có thiết bị đã đăng nhập và sử dụng thường xuyên trên 6 tháng.<br><br>
+                    Thực hiện quy trình xác minh để lấy lại quyền truy cập tài khoản.
+                </div>
+            </div>
+        </div>
+
+        <!-- GÓI 2 (950k + 15% = 1,092,500) -->
+        <div class="pkg-wrapper" id="hackWrap2">
+            <div class="pkg-card" onclick="selectPackageHack(2, 1092500, 'Lấy Lại FB Bị Hack + Bảo Vệ TK Khỏi Nguy Cơ Hack')">
+                <div class="pkg-left"><div class="radio-circle"></div><div class="pkg-name">Lấy Lại Facebook Bị Hack + Bảo Vệ TK Khỏi Nguy Cơ Hack</div></div>
+                <div class="pkg-right"><div class="pkg-price">1.092.500₫</div><div class="chevron-icon">▼</div></div>
+            </div>
+            <div class="pkg-details">
+                <div class="d-text">
+                    Chi tiết gói dịch vụ đang chọn<br>
+                    Dịch vụ khôi phục tài khoản Facebook bị hack và thiết lập bảo vệ tài khoản.<br><br>
+                    Yêu cầu có thiết bị đã đăng nhập và sử dụng thường xuyên trên 6 tháng.<br><br>
+                    Sau khi lấy lại sẽ thiết lập bảo mật để hạn chế nguy cơ bị hack lại.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- XÁC NHẬN & THANH TOÁN -->
+    <div class="terms-box">
+        <input type="checkbox" id="orderTermsAgreeHack">
+        <label for="orderTermsAgreeHack">TÔI XÁC NHẬN GÓI DỊCH VỤ VÀ CÁC ĐIỀU KHOẢN SỬ DỤNG.</label>
+    </div>
+
+    <div class="bill-summary">
+        <div class="bill-row" style="color: #fff; font-weight:bold; margin-bottom:10px; font-size: 15px;" id="billPkgNameHack">Chưa chọn gói dịch vụ</div>
+        <div class="bill-row"><span class="b-label">Giá sản phẩm cần thanh toán</span><span class="b-val" id="billBasePriceHack">0₫</span></div>
+        <div class="bill-row"><span class="b-label">Thuế VAT (8%)</span><span class="b-val" id="billVatPriceHack">0₫</span></div>
+        <div class="bill-row total"><span class="total-label">Khách hàng phải trả</span><span class="total-val" id="billTotalPriceHack">0₫</span></div>
+    </div>
+
+    <button class="btn-submit-order" onclick="processOrderHack()">
+        <svg viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.16-.28L11.66 4h1.34l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
+        XÁC NHẬN THANH TOÁN ĐƠN
+    </button>
+
+    <!-- LỊCH SỬ ĐƠN HÀNG LẤY LẠI HACK -->
+    <div class="recent-history-section">
+        <div class="hist-header">
+            <h3><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg> LỊCH SỬ ĐƠN GẦN ĐÂY</h3>
+            <button class="btn-refresh" onclick="loadOrderHistoryHack()">↻ LÀM MỚI</button>
+        </div>
+        <div class="table-container">
+            <table class="custom-table">
+                <thead><tr><th>ID</th><th>Dịch Vụ</th><th>Thời gian ĐN</th><th>Giá</th><th>Trạng Thái</th><th>Kết Quả</th><th>Ngày Tạo</th></tr></thead>
+                <tbody id="orderHistoryBodyHack">
+                    <!-- Javascript đổ data vào đây -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    (function initServiceHack() {
+        let currentSelectedPkgHack = null;
+        let currentTotalToPayHack = 0;
+
+        // 1. HÀM CHỌN GÓI 
+        window.selectPackageHack = function(id, price, name) {
+            for(let i = 1; i <= 2; i++) {
+                let el = document.getElementById('hackWrap' + i);
+                if(el) el.classList.remove('active');
+            }
+            
+            document.getElementById('hackWrap' + id).classList.add('active');
+            currentSelectedPkgHack = name;
+            
+            // Tính thuế 8%
+            let vat = price * 0.08;
+            currentTotalToPayHack = price + vat;
+
+            document.getElementById('billPkgNameHack').textContent = name;
+            document.getElementById('billBasePriceHack').textContent = price.toLocaleString('vi-VN') + '₫';
+            document.getElementById('billVatPriceHack').textContent = vat.toLocaleString('vi-VN') + '₫';
+            document.getElementById('billTotalPriceHack').textContent = currentTotalToPayHack.toLocaleString('vi-VN') + '₫';
+        };
+
+        // 2. XỬ LÝ THANH TOÁN VÀ LƯU DATABASE
+        window.processOrderHack = function() {
+            if (!window.isLoggedIn) { window.showCustomModal("Lỗi", "Vui lòng Đăng nhập để sử dụng dịch vụ!", "alert"); return; }
+            
+            const contactInfo = document.getElementById('orderContactInfoHack').value.trim();
+            const deviceTime = document.getElementById('orderDeviceTimeHack').value.trim();
+            const isAgreed = document.getElementById('orderTermsAgreeHack').checked;
+
+            if(!contactInfo || !deviceTime) { window.showCustomModal("Thiếu thông tin", "Vui lòng nhập Thông tin Liên hệ và Thời gian đăng nhập trên thiết bị!", "alert"); return; }
+            if(!currentSelectedPkgHack) { window.showCustomModal("Chưa chọn gói", "Vui lòng click chọn 1 Máy chủ dịch vụ Lấy lại Facebook!", "alert"); return; }
+            if(!isAgreed) { window.showCustomModal("Điều khoản", "Bạn cần tick vào ô Xác nhận điều khoản sử dụng!", "alert"); return; }
+
+            // CHECK SỐ DƯ
+            if(window.currentUser.balance < currentTotalToPayHack) {
+                window.showCustomModal("Số Dư Không Đủ", "Tài khoản của bạn không đủ tiền. Vui lòng nạp thêm!", "confirm", () => { window.navigateTo('pages/balance/deposit.html'); });
+                return;
+            }
+
+            // TRỪ TIỀN VÀ GHI VÀO DB
+            window.showCustomModal("Tiến Hành Lên Đơn", `Xác nhận gửi yêu cầu "${currentSelectedPkgHack}" với giá ${currentTotalToPayHack.toLocaleString('vi-VN')}₫ ?`, "confirm", () => {
+                
+                window.currentUser.balance -= currentTotalToPayHack;
+                window.currentUser.totalSpent += currentTotalToPayHack;
+
+                const orderId = "RC" + Math.floor(10000 + Math.random() * 90000); // RC = Recover
+                window.currentUser.history.unshift({
+                    id: orderId,
+                    type: 'service_lay_lai_hack',
+                    title: currentSelectedPkgHack,
+                    data: deviceTime, 
+                    amount: currentTotalToPayHack,
+                    time: new Date().toLocaleString('vi-VN'),
+                    status: 'processing',
+                    result: 'Đang kết nối thiết bị'
+                });
+
+                window.saveUserDB();
+                window.updateBalanceUI(); 
+
+                window.showCustomModal("Gửi Yêu Cầu Thành Công", "Hệ thống đã ghi nhận thiết bị của bạn. Chuyên viên bảo mật sẽ liên hệ qua Zalo/Telegram trong thời gian sớm nhất!", "alert", () => {
+                    loadOrderHistoryHack();
+                    document.getElementById('orderDeviceTimeHack').value = '';
+                });
+            });
+        };
+
+        // 3. HIỂN THỊ LỊCH SỬ ĐƠN (CÓ CỘT KẾT QUẢ)
+        window.loadOrderHistoryHack = function() {
+            const tbody = document.getElementById('orderHistoryBodyHack');
+            if(!window.isLoggedIn || !window.currentUser.history || window.currentUser.history.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:#8e8e93;">Chưa có đơn hàng nào</td></tr>`;
+                return;
+            }
+
+            // Lọc các đơn thuộc về Lấy lại Hack
+            const hackOrders = window.currentUser.history.filter(h => h.type === 'service_lay_lai_hack');
+            if(hackOrders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:#8e8e93;">Bạn chưa có đơn Lấy Lại FB Bị Hack nào</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = hackOrders.map(o => `
+                <tr>
+                    <td style="color:#0A84FF; font-weight:bold;">${o.id}</td>
+                    <td><div style="font-weight:bold; color:#fff; font-size:13px; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${o.title}</div></td>
+                    <td><div style="color:#8e8e93; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${o.data}</div></td>
+                    <td style="color:#34C759; font-family:monospace; font-weight:bold;">${o.amount.toLocaleString('vi-VN')}₫</td>
+                    <td><span class="status-badge st-processing">Đang chạy</span></td>
+                    <td style="color:#FFD700; font-weight:bold; font-size:12px;">${o.result || 'Đang kết nối'}</td>
+                    <td style="color:#8e8e93; font-size:12px;">${o.time}</td>
+                </tr>
+            `).join('');
+        };
+
+        setTimeout(loadOrderHistoryHack, 100);
+    })();
+</script>
